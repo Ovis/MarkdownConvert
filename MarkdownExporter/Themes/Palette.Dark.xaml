@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="UiBrush.Window" Color="#202329" />
+    <SolidColorBrush x:Key="UiBrush.Panel" Color="#292E36" />
+    <SolidColorBrush x:Key="UiBrush.Sidebar" Color="#262B32" />
+    <SolidColorBrush x:Key="UiBrush.Control" Color="#343B45" />
+    <SolidColorBrush x:Key="UiBrush.ControlHover" Color="#3F4B59" />
+    <SolidColorBrush x:Key="UiBrush.ControlPressed" Color="#4A5969" />
+    <SolidColorBrush x:Key="UiBrush.Border" Color="#515C69" />
+    <SolidColorBrush x:Key="UiBrush.BorderStrong" Color="#6F7E8F" />
+    <SolidColorBrush x:Key="UiBrush.Text" Color="#EEF1F5" />
+    <SolidColorBrush x:Key="UiBrush.TextMuted" Color="#B5C2D0" />
+    <SolidColorBrush x:Key="UiBrush.Accent" Color="#8FBDF0" />
+    <SolidColorBrush x:Key="UiBrush.AccentHover" Color="#A3CAF4" />
+    <SolidColorBrush x:Key="UiBrush.AccentPressed" Color="#74A9E2" />
+    <SolidColorBrush x:Key="UiBrush.AccentText" Color="#142237" />
+    <SolidColorBrush x:Key="UiBrush.Selection" Color="#344B63" />
+    <SolidColorBrush x:Key="UiBrush.Success" Color="#A7DAB2" />
+    <SolidColorBrush x:Key="UiBrush.Warning" Color="#E9BC79" />
+    <SolidColorBrush x:Key="UiBrush.Error" Color="#F0A3A3" />
+    <SolidColorBrush x:Key="UiBrush.DisabledBackground" Color="#30353D" />
+    <SolidColorBrush x:Key="UiBrush.DisabledText" Color="#8C98A6" />
+</ResourceDictionary>

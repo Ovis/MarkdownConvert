@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="FilesCount" xml:space="preserve"><value>ファイル（{0}件）</value></data>
+  <data name="ConvertCount" xml:space="preserve"><value>{0}件を変換</value></data>
+  <data name="AddFiles" xml:space="preserve"><value>ファイルを追加</value></data>
+  <data name="RemoveSelected" xml:space="preserve"><value>選択を削除</value></data>
+  <data name="File" xml:space="preserve"><value>ファイル</value></data>
+  <data name="Encoding" xml:space="preserve"><value>文字コード</value></data>
+  <data name="EncodingAuto" xml:space="preserve"><value>自動</value></data>
+  <data name="State" xml:space="preserve"><value>状態</value></data>
+  <data name="DropMarkdown" xml:space="preserve"><value>Markdownファイルをここにドロップ</value></data>
+  <data name="PromptAddFiles" xml:space="preserve"><value>ファイルを追加してください。</value></data>
+  <data name="PromptCheckSettings" xml:space="preserve"><value>設定を確認して変換してください。</value></data>
+  <data name="ConversionSettings" xml:space="preserve"><value>変換設定</value></data>
+  <data name="ApplyDefaultsToCurrentPrompt" xml:space="preserve"><value>変更した既定の変換設定を、現在の変換設定にも反映しますか？</value></data>
+  <data name="DefaultSettings" xml:space="preserve"><value>既定の設定</value></data>
+  <data name="OutputFormat" xml:space="preserve"><value>出力形式</value></data>
+  <data name="OutputDirectory" xml:space="preserve"><value>出力先</value></data>
+  <data name="OutputDirectoryHint" xml:space="preserve"><value>空欄なら元ファイルと同じ場所</value></data>
+  <data name="Browse" xml:space="preserve"><value>参照…</value></data>
+  <data name="Template" xml:space="preserve"><value>テンプレート</value></data>
+  <data name="HtmlImages" xml:space="preserve"><value>HTML画像</value></data>
+  <data name="EmbedInHtml" xml:space="preserve"><value>HTMLに埋め込む</value></data>
+  <data name="PdfOrientation" xml:space="preserve"><value>PDFの向き</value></data>
+  <data name="Portrait" xml:space="preserve"><value>縦</value></data>
+  <data name="Landscape" xml:space="preserve"><value>横</value></data>
+  <data name="FigureDisplay" xml:space="preserve"><value>図の表示</value></data>
+  <data name="FitOnePage" xml:space="preserve"><value>1ページに収める</value></data>
+  <data name="RestoreDefaults" xml:space="preserve"><value>既定値に戻す</value></data>
+  <data name="Convert" xml:space="preserve"><value>変換する</value></data>
+  <data name="Appearance" xml:space="preserve"><value>外観</value></data>
+  <data name="ThemeSystem" xml:space="preserve"><value>システムに合わせる</value></data>
+  <data name="ThemeLight" xml:space="preserve"><value>ライト</value></data>
+  <data name="ThemeDark" xml:space="preserve"><value>ダーク</value></data>
+  <data name="Language" xml:space="preserve"><value>表示言語</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>システムに合わせる</value></data>
+  <data name="Japanese" xml:space="preserve"><value>日本語</value></data>
+  <data name="English" xml:space="preserve"><value>英語</value></data>
+  <data name="OutputDirectoryWithHint" xml:space="preserve"><value>出力先（空欄なら元ファイルと同じ場所）</value></data>
+  <data name="OpenTemplateFolder" xml:space="preserve"><value>フォルダを開く</value></data>
+  <data name="RefreshTemplateList" xml:space="preserve"><value>一覧を更新</value></data>
+  <data name="ResetDefaultTemplate" xml:space="preserve"><value>defaultを初期化</value></data>
+  <data name="Cancel" xml:space="preserve"><value>キャンセル</value></data>
+  <data name="Save" xml:space="preserve"><value>保存</value></data>
+  <data name="DialogSettingsError" xml:space="preserve"><value>設定エラー</value></data>
+  <data name="DialogConversionError" xml:space="preserve"><value>変換エラー</value></data>
+  <data name="DialogCannotConvert" xml:space="preserve"><value>変換できません</value></data>
+  <data name="DialogConfirmation" xml:space="preserve"><value>確認</value></data>
+  <data name="DialogYes" xml:space="preserve"><value>はい</value></data>
+  <data name="DialogNo" xml:space="preserve"><value>いいえ</value></data>
+  <data name="DialogOk" xml:space="preserve"><value>OK</value></data>
+  <data name="DialogTemplateResetError" xml:space="preserve"><value>テンプレート初期化エラー</value></data>
+  <data name="SelectHtmlOrPdf" xml:space="preserve"><value>HTMLかPDFを選択してください。</value></data>
+  <data name="TemplateResetPrompt" xml:space="preserve"><value>defaultテンプレートを配布時の内容で上書きしますか？</value></data>
+  <data name="OverwritePrompt" xml:space="preserve"><value>{0}&#10;&#10;上書きしますか？</value></data>
+  <data name="FilterMarkdown" xml:space="preserve"><value>Markdownファイル (*.md;*.markdown)|*.md;*.markdown</value></data>
+  <data name="OnlyMarkdown" xml:space="preserve"><value>Markdownファイルのみ追加できます: {0}</value></data>
+  <data name="Converting" xml:space="preserve"><value>変換中…</value></data>
+  <data name="Waiting" xml:space="preserve"><value>待機</value></data>
+  <data name="Processing" xml:space="preserve"><value>処理中</value></data>
+  <data name="Success" xml:space="preserve"><value>成功</value></data>
+  <data name="Failure" xml:space="preserve"><value>失敗</value></data>
+  <data name="Warning" xml:space="preserve"><value>警告</value></data>
+  <data name="NotApplicable" xml:space="preserve"><value>—</value></data>
+  <data name="HtmlDone" xml:space="preserve"><value>HTML完了</value></data>
+  <data name="RenderDone" xml:space="preserve"><value>描画完了</value></data>
+  <data name="PdfDone" xml:space="preserve"><value>PDF完了</value></data>
+  <data name="Complete" xml:space="preserve"><value>完了</value></data>
+  <data name="Summary" xml:space="preserve"><value>変換完了: 成功 {0}件、失敗 {1}件。</value></data>
+  <data name="CliMissingValue" xml:space="preserve"><value>{0} の値がありません。</value></data>
+  <data name="CliInvalidFormat" xml:space="preserve"><value>--format は html、pdf、both のいずれかです。</value></data>
+  <data name="CliInvalidOrientation" xml:space="preserve"><value>--orientation は portrait または landscape です。</value></data>
+  <data name="CliInvalidEncoding" xml:space="preserve"><value>--encoding は auto、utf-8、shift-jis、euc-jp のいずれかです。</value></data>
+  <data name="CliUnknownOption" xml:space="preserve"><value>不明なオプション: {0}</value></data>
+  <data name="CliRequiresFile" xml:space="preserve"><value>--run には Markdown ファイルを指定してください。</value></data>
+  <data name="CliRequiresRun" xml:space="preserve"><value>変換オプションを使うには --run を指定してください。</value></data>
+  <data name="CliOutputDesc" xml:space="preserve"><value>共通出力フォルダ</value></data>
+  <data name="CliTemplateDesc" xml:space="preserve"><value>テンプレート名または絶対フォルダ</value></data>
+  <data name="CliFormatDesc" xml:space="preserve"><value>出力形式（既定: both）</value></data>
+  <data name="CliEmbedDesc" xml:space="preserve"><value>画像をHTMLへ埋め込む</value></data>
+  <data name="CliOrientationDesc" xml:space="preserve"><value>PDFの向き</value></data>
+  <data name="CliFitDesc" xml:space="preserve"><value>PDFの図をページへ縮小</value></data>
+  <data name="CliEncodingDesc" xml:space="preserve"><value>入力文字コード（既定: auto）</value></data>
+  <data name="CliOverwriteDesc" xml:space="preserve"><value>既存の出力を上書き</value></data>
+  <data name="CliWarningPrefix" xml:space="preserve"><value>警告: {0}</value></data>
+  <data name="CliErrorPrefix" xml:space="preserve"><value>エラー: {0}</value></data>
+  <data name="InputMissing" xml:space="preserve"><value>入力ファイルがありません: {0}</value></data>
+  <data name="InvalidMarkdown" xml:space="preserve"><value>Markdownファイルではありません: {0}</value></data>
+  <data name="DuplicateOutput" xml:space="preserve"><value>同じ出力先が重複します: {0}</value></data>
+  <data name="OutputExists" xml:space="preserve"><value>出力ファイルが既にあります: {0}</value></data>
+  <data name="LinkFinalizeFailed" xml:space="preserve"><value>HTMLリンクの確定に失敗しました: {0}</value></data>
+  <data name="LinkTargetFailed" xml:space="preserve"><value>リンク先のHTML化が失敗したため元のリンクを維持しました: {0}</value></data>
+  <data name="UnsupportedImage" xml:space="preserve"><value>対応していない画像形式です: {0}</value></data>
+  <data name="ImageMissing" xml:space="preserve"><value>画像が見つかりません: {0}</value></data>
+  <data name="TemplateAssetsOnly" xml:space="preserve"><value>テンプレート素材は assets/ 内に置いてください: {0}</value></data>
+  <data name="TemplateAssetMissing" xml:space="preserve"><value>テンプレート素材が見つかりません: {0}</value></data>
+  <data name="TemplateAssetsMissing" xml:space="preserve"><value>テンプレートの assets/ がありません: {0}</value></data>
+  <data name="InvalidTemplateAssetPath" xml:space="preserve"><value>不正なテンプレート素材パス: {0}</value></data>
+  <data name="UnknownImageType" xml:space="preserve"><value>画像形式が不明です: {0}</value></data>
+  <data name="BundledTemplateMissing" xml:space="preserve"><value>初期テンプレートがありません: {0}</value></data>
+  <data name="TemplateNameEmpty" xml:space="preserve"><value>テンプレート名が空です。</value></data>
+  <data name="TemplateFilesMissing" xml:space="preserve"><value>テンプレートに index.html と style.css が必要です: {0}</value></data>
+  <data name="TemplatePlaceholdersMissing" xml:space="preserve"><value>テンプレートには {{content}} と {{style}} が必要です。</value></data>
+  <data name="UnsafeTemplateCss" xml:space="preserve"><value>style.css に実行可能な記述や外部CSSの読み込みは使えません。</value></data>
+  <data name="UnsafeTemplateElement" xml:space="preserve"><value>テンプレートには script、iframe、外部CSS等の実行可能な要素を置けません。</value></data>
+  <data name="UnsafeTemplateAttribute" xml:space="preserve"><value>テンプレートにJavaScriptやイベント属性は使えません。</value></data>
+  <data name="InvalidTemplateName" xml:space="preserve"><value>テンプレート名にはフォルダ名のみ指定してください。</value></data>
+  <data name="EncodingUnknown" xml:space="preserve"><value>文字コードを判定できません。文字コードを明示してください。</value></data>
+  <data name="EncodingUnsupported" xml:space="preserve"><value>判定された文字コード {0} は対象外です。文字コードを明示してください。</value></data>
+  <data name="EncodingReadFailed" xml:space="preserve"><value>指定された文字コード {0} で読み取れません。</value></data>
+  <data name="InvalidAssetPath" xml:space="preserve"><value>不正な素材パス: {0}</value></data>
+  <data name="NavigationFailed" xml:space="preserve"><value>WebView2でHTMLを開けませんでした。</value></data>
+  <data name="WebView2Missing" xml:space="preserve"><value>WebView2 Runtimeが見つかりません。インストールしてから再実行してください: {0}</value></data>
+  <data name="WebView2MissingTitle" xml:space="preserve"><value>WebView2 Runtimeが必要です</value></data>
+  <data name="WebView2MissingPrompt" xml:space="preserve"><value>HTML・PDFへの変換にはWebView2 Runtimeが必要です。&#10;&#10;ダウンロードページを開きますか？&#10;{0}</value></data>
+  <data name="RenderingFailed" xml:space="preserve"><value>HTML描画に失敗しました: {0}</value></data>
+  <data name="RenderTimeout" xml:space="preserve"><value>Mermaid、数式、画像、フォントの描画が完了しませんでした。</value></data>
+  <data name="FontsFailed" xml:space="preserve"><value>フォントを読み込めませんでした: {0}</value></data>
+  <data name="PdfFailed" xml:space="preserve"><value>PDFの生成に失敗しました。</value></data>
+  <data name="PdfLinkDifferentVolume" xml:space="preserve"><value>別のドライブにあるPDFへのリンクは相対パスにできません: {0}</value></data>
+  <data name="HtmlCaptureFailed" xml:space="preserve"><value>完成HTMLを取得できませんでした。</value></data>
+  <data name="ExternalImageFailed" xml:space="preserve"><value>外部画像を読み込めませんでした: {0}</value></data>
+</root>

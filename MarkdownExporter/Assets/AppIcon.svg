@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">MarkdownExporter</title>
+  <desc id="desc">Markdown marks and a forward arrow inside a document.</desc>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#24649F"/>
+  <g transform="translate(2 0)">
+    <path d="M17 9h23l8 8v34a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V13a4 4 0 0 1 4-4Z" fill="#FFFFFF"/>
+    <path d="M40 9v8h8" fill="#C4E3F3"/>
+    <path d="M23 22v14m7-14v14m-10-9h13m-13 5h13" fill="none" stroke="#24649F" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M37 24h5M37 30h5" fill="none" stroke="#99B9CF" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M20 42h19m-6-6 6 6-6 6" fill="none" stroke="#24649F" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

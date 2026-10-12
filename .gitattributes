@@ -1,0 +1,5 @@
+# Third-party generated bundle contains whitespace inside JavaScript templates.
+MarkdownExporter/WebAssets/render-markdig.js whitespace=-blank-at-eol
+.gitattributes text eol=lf
+.editorconfig text eol=lf
+*.cs text eol=lf

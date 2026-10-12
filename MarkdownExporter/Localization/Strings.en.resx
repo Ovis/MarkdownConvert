@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="FilesCount" xml:space="preserve"><value>Files ({0})</value></data>
+  <data name="ConvertCount" xml:space="preserve"><value>Convert ({0})</value></data>
+  <data name="AddFiles" xml:space="preserve"><value>Add files</value></data>
+  <data name="RemoveSelected" xml:space="preserve"><value>Remove selected</value></data>
+  <data name="File" xml:space="preserve"><value>File</value></data>
+  <data name="Encoding" xml:space="preserve"><value>Encoding</value></data>
+  <data name="EncodingAuto" xml:space="preserve"><value>Auto</value></data>
+  <data name="State" xml:space="preserve"><value>Status</value></data>
+  <data name="DropMarkdown" xml:space="preserve"><value>Drop Markdown files here</value></data>
+  <data name="PromptAddFiles" xml:space="preserve"><value>Add files to convert.</value></data>
+  <data name="PromptCheckSettings" xml:space="preserve"><value>Review the settings, then convert.</value></data>
+  <data name="ConversionSettings" xml:space="preserve"><value>Conversion settings</value></data>
+  <data name="ApplyDefaultsToCurrentPrompt" xml:space="preserve"><value>Apply the changed default conversion settings to the current conversion?</value></data>
+  <data name="DefaultSettings" xml:space="preserve"><value>Default settings</value></data>
+  <data name="OutputFormat" xml:space="preserve"><value>Output format</value></data>
+  <data name="OutputDirectory" xml:space="preserve"><value>Output folder</value></data>
+  <data name="OutputDirectoryHint" xml:space="preserve"><value>Leave blank to use the source folder</value></data>
+  <data name="Browse" xml:space="preserve"><value>Browse…</value></data>
+  <data name="Template" xml:space="preserve"><value>Template</value></data>
+  <data name="HtmlImages" xml:space="preserve"><value>HTML images</value></data>
+  <data name="EmbedInHtml" xml:space="preserve"><value>Embed in HTML</value></data>
+  <data name="PdfOrientation" xml:space="preserve"><value>PDF orientation</value></data>
+  <data name="Portrait" xml:space="preserve"><value>Portrait</value></data>
+  <data name="Landscape" xml:space="preserve"><value>Landscape</value></data>
+  <data name="FigureDisplay" xml:space="preserve"><value>Figures</value></data>
+  <data name="FitOnePage" xml:space="preserve"><value>Fit each figure on one page</value></data>
+  <data name="RestoreDefaults" xml:space="preserve"><value>Restore defaults</value></data>
+  <data name="Convert" xml:space="preserve"><value>Convert</value></data>
+  <data name="Appearance" xml:space="preserve"><value>Appearance</value></data>
+  <data name="ThemeSystem" xml:space="preserve"><value>Use system setting</value></data>
+  <data name="ThemeLight" xml:space="preserve"><value>Light</value></data>
+  <data name="ThemeDark" xml:space="preserve"><value>Dark</value></data>
+  <data name="Language" xml:space="preserve"><value>Display language</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>Use system language</value></data>
+  <data name="Japanese" xml:space="preserve"><value>Japanese</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="OutputDirectoryWithHint" xml:space="preserve"><value>Output folder (blank: source folder)</value></data>
+  <data name="OpenTemplateFolder" xml:space="preserve"><value>Open folder</value></data>
+  <data name="RefreshTemplateList" xml:space="preserve"><value>Refresh list</value></data>
+  <data name="ResetDefaultTemplate" xml:space="preserve"><value>Reset default</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="DialogSettingsError" xml:space="preserve"><value>Settings error</value></data>
+  <data name="DialogConversionError" xml:space="preserve"><value>Conversion error</value></data>
+  <data name="DialogCannotConvert" xml:space="preserve"><value>Cannot convert</value></data>
+  <data name="DialogConfirmation" xml:space="preserve"><value>Confirm</value></data>
+  <data name="DialogYes" xml:space="preserve"><value>Yes</value></data>
+  <data name="DialogNo" xml:space="preserve"><value>No</value></data>
+  <data name="DialogOk" xml:space="preserve"><value>OK</value></data>
+  <data name="DialogTemplateResetError" xml:space="preserve"><value>Template reset error</value></data>
+  <data name="SelectHtmlOrPdf" xml:space="preserve"><value>Select HTML or PDF.</value></data>
+  <data name="TemplateResetPrompt" xml:space="preserve"><value>Replace the default template with the bundled version?</value></data>
+  <data name="OverwritePrompt" xml:space="preserve"><value>{0}&#10;&#10;Overwrite existing files?</value></data>
+  <data name="FilterMarkdown" xml:space="preserve"><value>Markdown files (*.md;*.markdown)|*.md;*.markdown</value></data>
+  <data name="OnlyMarkdown" xml:space="preserve"><value>Only Markdown files can be added: {0}</value></data>
+  <data name="Converting" xml:space="preserve"><value>Converting…</value></data>
+  <data name="Waiting" xml:space="preserve"><value>Waiting</value></data>
+  <data name="Processing" xml:space="preserve"><value>Working</value></data>
+  <data name="Success" xml:space="preserve"><value>Success</value></data>
+  <data name="Failure" xml:space="preserve"><value>Failed</value></data>
+  <data name="Warning" xml:space="preserve"><value>Warning</value></data>
+  <data name="NotApplicable" xml:space="preserve"><value>—</value></data>
+  <data name="HtmlDone" xml:space="preserve"><value>HTML done</value></data>
+  <data name="RenderDone" xml:space="preserve"><value>Rendered</value></data>
+  <data name="PdfDone" xml:space="preserve"><value>PDF done</value></data>
+  <data name="Complete" xml:space="preserve"><value>Complete</value></data>
+  <data name="Summary" xml:space="preserve"><value>Conversion complete: {0} succeeded, {1} failed.</value></data>
+  <data name="CliMissingValue" xml:space="preserve"><value>Missing value for {0}.</value></data>
+  <data name="CliInvalidFormat" xml:space="preserve"><value>--format must be html, pdf, or both.</value></data>
+  <data name="CliInvalidOrientation" xml:space="preserve"><value>--orientation must be portrait or landscape.</value></data>
+  <data name="CliInvalidEncoding" xml:space="preserve"><value>--encoding must be auto, utf-8, shift-jis, or euc-jp.</value></data>
+  <data name="CliUnknownOption" xml:space="preserve"><value>Unknown option: {0}</value></data>
+  <data name="CliRequiresFile" xml:space="preserve"><value>Specify a Markdown file with --run.</value></data>
+  <data name="CliRequiresRun" xml:space="preserve"><value>Use --run with conversion options.</value></data>
+  <data name="CliOutputDesc" xml:space="preserve"><value>Shared output folder</value></data>
+  <data name="CliTemplateDesc" xml:space="preserve"><value>Template name or absolute folder</value></data>
+  <data name="CliFormatDesc" xml:space="preserve"><value>Output format (default: both)</value></data>
+  <data name="CliEmbedDesc" xml:space="preserve"><value>Embed images in HTML</value></data>
+  <data name="CliOrientationDesc" xml:space="preserve"><value>PDF orientation</value></data>
+  <data name="CliFitDesc" xml:space="preserve"><value>Scale PDF figures to fit a page</value></data>
+  <data name="CliEncodingDesc" xml:space="preserve"><value>Input encoding (default: auto)</value></data>
+  <data name="CliOverwriteDesc" xml:space="preserve"><value>Overwrite existing output</value></data>
+  <data name="CliWarningPrefix" xml:space="preserve"><value>Warning: {0}</value></data>
+  <data name="CliErrorPrefix" xml:space="preserve"><value>Error: {0}</value></data>
+  <data name="InputMissing" xml:space="preserve"><value>Input file not found: {0}</value></data>
+  <data name="InvalidMarkdown" xml:space="preserve"><value>Not a Markdown file: {0}</value></data>
+  <data name="DuplicateOutput" xml:space="preserve"><value>Multiple inputs target the same output: {0}</value></data>
+  <data name="OutputExists" xml:space="preserve"><value>Output file already exists: {0}</value></data>
+  <data name="LinkFinalizeFailed" xml:space="preserve"><value>Could not finalize HTML links: {0}</value></data>
+  <data name="LinkTargetFailed" xml:space="preserve"><value>The linked Markdown could not be converted; kept the original link: {0}</value></data>
+  <data name="UnsupportedImage" xml:space="preserve"><value>Unsupported image format: {0}</value></data>
+  <data name="ImageMissing" xml:space="preserve"><value>Image not found: {0}</value></data>
+  <data name="TemplateAssetsOnly" xml:space="preserve"><value>Place template assets under assets/: {0}</value></data>
+  <data name="TemplateAssetMissing" xml:space="preserve"><value>Template asset not found: {0}</value></data>
+  <data name="TemplateAssetsMissing" xml:space="preserve"><value>Template assets/ folder not found: {0}</value></data>
+  <data name="InvalidTemplateAssetPath" xml:space="preserve"><value>Invalid template asset path: {0}</value></data>
+  <data name="UnknownImageType" xml:space="preserve"><value>Unknown image format: {0}</value></data>
+  <data name="BundledTemplateMissing" xml:space="preserve"><value>Bundled default template not found: {0}</value></data>
+  <data name="TemplateNameEmpty" xml:space="preserve"><value>Template name is empty.</value></data>
+  <data name="TemplateFilesMissing" xml:space="preserve"><value>Template requires index.html and style.css: {0}</value></data>
+  <data name="TemplatePlaceholdersMissing" xml:space="preserve"><value>Template requires {{content}} and {{style}}.</value></data>
+  <data name="UnsafeTemplateCss" xml:space="preserve"><value>Executable content and external CSS imports are not allowed in style.css.</value></data>
+  <data name="UnsafeTemplateElement" xml:space="preserve"><value>Templates cannot contain script, iframe, external CSS, or other executable elements.</value></data>
+  <data name="UnsafeTemplateAttribute" xml:space="preserve"><value>JavaScript and event attributes are not allowed in templates.</value></data>
+  <data name="InvalidTemplateName" xml:space="preserve"><value>Specify a folder name for the template.</value></data>
+  <data name="EncodingUnknown" xml:space="preserve"><value>Could not detect the encoding. Specify it explicitly.</value></data>
+  <data name="EncodingUnsupported" xml:space="preserve"><value>Detected encoding {0} is unsupported. Specify an encoding explicitly.</value></data>
+  <data name="EncodingReadFailed" xml:space="preserve"><value>Could not read the file as {0}.</value></data>
+  <data name="InvalidAssetPath" xml:space="preserve"><value>Invalid asset path: {0}</value></data>
+  <data name="NavigationFailed" xml:space="preserve"><value>WebView2 could not open the HTML.</value></data>
+  <data name="WebView2Missing" xml:space="preserve"><value>WebView2 Runtime was not found. Install it and try again: {0}</value></data>
+  <data name="WebView2MissingTitle" xml:space="preserve"><value>WebView2 Runtime required</value></data>
+  <data name="WebView2MissingPrompt" xml:space="preserve"><value>HTML and PDF conversion requires WebView2 Runtime.&#10;&#10;Open the download page?&#10;{0}</value></data>
+  <data name="RenderingFailed" xml:space="preserve"><value>HTML rendering failed: {0}</value></data>
+  <data name="RenderTimeout" xml:space="preserve"><value>Mermaid, math, images, or fonts did not finish rendering.</value></data>
+  <data name="FontsFailed" xml:space="preserve"><value>Could not load fonts: {0}</value></data>
+  <data name="PdfFailed" xml:space="preserve"><value>Could not create the PDF.</value></data>
+  <data name="PdfLinkDifferentVolume" xml:space="preserve"><value>A PDF link on another volume cannot be made relative: {0}</value></data>
+  <data name="HtmlCaptureFailed" xml:space="preserve"><value>Could not capture the completed HTML.</value></data>
+  <data name="ExternalImageFailed" xml:space="preserve"><value>Could not load external image: {0}</value></data>
+</root>
