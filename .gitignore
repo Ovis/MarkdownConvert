@@ -376,6 +376,11 @@ ASALocalRun/
 *.binlog
 MSBuild_Logs/
 
+# Local design notes and technical spikes (never part of product commits)
+/spikes/
+/MarkdownExporter-v1-specification.md
+/tools/web-assets/build-meta.json
+
 # AWS SAM Build and Temporary Artifacts folder
 .aws-sam
 

@@ -1,0 +1,120 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]*.[0-9]*.[0-9]*'
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: windows-2025
+    timeout-minutes: 60
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Validate release version
+        shell: pwsh
+        run: |
+          if ($env:RELEASE_TAG -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') {
+            throw "Expected a stable tag such as v1.0.0: $env:RELEASE_TAG"
+          }
+          "APP_VERSION=$($env:RELEASE_TAG.Substring(1))" >> $env:GITHUB_ENV
+
+      - name: Restore
+        shell: cmd
+        run: dotnet restore MarkdownExporter.slnx -m:1
+
+      - name: Check formatting
+        shell: cmd
+        run: dotnet format MarkdownExporter.slnx --verify-no-changes --no-restore
+
+      - name: Build
+        shell: cmd
+        run: dotnet build MarkdownExporter.slnx --configuration Release --no-restore -m:1
+
+      - name: Test
+        shell: cmd
+        run: dotnet test MarkdownExporter.Tests/MarkdownExporter.Tests.csproj --configuration Release --no-build --no-restore -m:1
+
+      - name: Publish
+        shell: cmd
+        run: dotnet publish MarkdownExporter/MarkdownExporter.csproj --configuration Release --runtime win-x64 --no-restore -m:1 -p:Version=%APP_VERSION%
+
+      - name: Create ZIP
+        shell: pwsh
+        run: |
+          ./tools/package-release.ps1 -Version $env:APP_VERSION `
+            -PublishDir ./MarkdownExporter/bin/Release/net10.0-windows/win-x64/publish `
+            -OutputDir ./artifacts
+
+      - name: Download signed WebView2 bootstrapper
+        shell: pwsh
+        run: |
+          $bootstrapper = Join-Path $PWD 'artifacts/MicrosoftEdgeWebview2Setup.exe'
+          Invoke-WebRequest -Uri 'https://go.microsoft.com/fwlink/p/?LinkId=2124703' -OutFile $bootstrapper
+          $signature = Get-AuthenticodeSignature -LiteralPath $bootstrapper
+          if ($signature.Status -ne 'Valid' -or $signature.SignerCertificate.Subject -notmatch 'Microsoft Corporation') {
+            throw 'The WebView2 bootstrapper is not signed by Microsoft.'
+          }
+
+      - name: Get Inno Setup compiler
+        shell: pwsh
+        run: |
+          $setup = Join-Path $PWD 'artifacts/innosetup-6.7.3.exe'
+          Invoke-WebRequest -Uri 'https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe' -OutFile $setup
+          $signature = Get-AuthenticodeSignature -LiteralPath $setup
+          if ($signature.Status -ne 'Valid' -or $signature.SignerCertificate.Subject -notmatch 'Pyrsys B.V.') {
+            throw 'The Inno Setup compiler download has an invalid publisher signature.'
+          }
+          $compilerDir = Join-Path $PWD 'artifacts/InnoSetup'
+          $process = Start-Process -FilePath $setup -ArgumentList @('/PORTABLE=1', '/VERYSILENT', '/CURRENTUSER', "/DIR=$compilerDir") -Wait -PassThru -WindowStyle Hidden
+          if ($process.ExitCode -ne 0) { throw 'Could not extract Inno Setup compiler.' }
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = Join-Path $PWD 'artifacts/InnoSetup/ISCC.exe'
+          if (-not (Test-Path -LiteralPath $iscc)) { throw "ISCC not found: $iscc" }
+          $publish = (Resolve-Path ./MarkdownExporter/bin/Release/net10.0-windows/win-x64/publish).Path
+          $bootstrapper = (Resolve-Path ./artifacts/MicrosoftEdgeWebview2Setup.exe).Path
+          $output = (Resolve-Path ./artifacts).Path
+          & $iscc "-dAppVersion=$env:APP_VERSION" "-dPublishDir=$publish" `
+            "-dBootstrapperPath=$bootstrapper" "-o$output" ./installer/MarkdownExporter.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Inno Setup compilation failed.' }
+
+      - name: Write checksums
+        shell: pwsh
+        run: |
+          @(
+            "./artifacts/MarkdownExporter-$env:APP_VERSION-win-x64.zip",
+            "./artifacts/MarkdownExporter-$env:APP_VERSION-win-x64-setup.exe"
+          ) | ForEach-Object { Get-Item -LiteralPath $_ } |
+            Sort-Object Name |
+            ForEach-Object {
+              $hash = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+              "$hash  $($_.Name)"
+            } | Set-Content ./artifacts/SHA256SUMS.txt -Encoding ascii
+
+      - name: Create draft GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $zip = "./artifacts/MarkdownExporter-$env:APP_VERSION-win-x64.zip"
+          $installer = "./artifacts/MarkdownExporter-$env:APP_VERSION-win-x64-setup.exe"
+          gh release create $env:RELEASE_TAG $zip $installer ./artifacts/SHA256SUMS.txt `
+            --draft --verify-tag --title "MarkdownExporter $env:APP_VERSION" --generate-notes
+          if ($LASTEXITCODE -ne 0) { throw 'Could not create draft Release.' }

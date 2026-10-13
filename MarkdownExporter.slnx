@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MarkdownExporter/MarkdownExporter.csproj" />
+  <Project Path="MarkdownExporter.Tests/MarkdownExporter.Tests.csproj" />
+</Solution>
