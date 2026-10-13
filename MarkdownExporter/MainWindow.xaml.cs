@@ -273,6 +273,7 @@ public partial class MainWindow : Window
             row.HtmlStatus = options.Format == ExportFormat.Pdf ? "NotApplicable" : "Waiting";
             row.PdfStatus = options.Format == ExportFormat.Html ? "NotApplicable" : "Waiting";
             row.State = "Processing";
+            row.Detail = "";
         }
         try
         {
@@ -318,6 +319,9 @@ public sealed class FileRow : INotifyPropertyChanged
 
     public string Path { get; }
     public string Name => System.IO.Path.GetFileName(Path);
+    public string ToolTipText => string.IsNullOrEmpty(detail)
+        ? $"{Name}{Environment.NewLine}{Path}"
+        : $"{Name}{Environment.NewLine}{Path}{Environment.NewLine}{Environment.NewLine}{detail}";
     public EncodingOption[] EncodingOptions { get; } =
     [
         new(InputEncoding.Auto, "EncodingAuto"),
@@ -355,7 +359,7 @@ public sealed class FileRow : INotifyPropertyChanged
     public string Detail
     {
         get => detail;
-        set { detail = value; Notify(); }
+        set { detail = value; Notify(); Notify(nameof(ToolTipText)); }
     }
 
     public void RefreshLanguage()

@@ -27,7 +27,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel VerticalAlignment="Center" Margin="{StaticResource UiPadding.FileCell}"
-                                                    ToolTip="{Binding Detail}">
+                                                    ToolTip="{Binding ToolTipText}">
                                             <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"
                                                        Style="{StaticResource UiStyle.TableFileName}"/>
                                             <TextBlock Text="{Binding Path}" TextTrimming="CharacterEllipsis" FontSize="10"

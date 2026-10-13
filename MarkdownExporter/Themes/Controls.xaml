@@ -35,6 +35,32 @@
         <Setter Property="Foreground" Value="{DynamicResource UiBrush.Error}" />
     </Style>
 
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Background" Value="{DynamicResource UiBrush.Control}" />
+        <Setter Property="Foreground" Value="{DynamicResource UiBrush.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource UiBrush.BorderStrong}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="MaxWidth" Value="520" />
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource UiRadius.Control}">
+                        <ContentPresenter ContentSource="Content" Margin="{TemplateBinding Padding}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type Button}">
         <Setter Property="MinHeight" Value="{StaticResource UiSize.ControlHeight}" />
         <Setter Property="Padding" Value="{StaticResource UiPadding.Control}" />
