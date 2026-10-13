@@ -8,6 +8,8 @@
   <data name="ConvertCount" xml:space="preserve"><value>{0}件を変換</value></data>
   <data name="AddFiles" xml:space="preserve"><value>ファイルを追加</value></data>
   <data name="RemoveSelected" xml:space="preserve"><value>選択を削除</value></data>
+  <data name="RemoveMenu" xml:space="preserve"><value>削除メニューを開く</value></data>
+  <data name="ClearList" xml:space="preserve"><value>一覧をクリア</value></data>
   <data name="File" xml:space="preserve"><value>ファイル</value></data>
   <data name="Encoding" xml:space="preserve"><value>文字コード</value></data>
   <data name="EncodingAuto" xml:space="preserve"><value>自動</value></data>

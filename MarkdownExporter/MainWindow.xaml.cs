@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using MarkdownExporter.Conversion;
 using MarkdownExporter.Dialogs;
@@ -19,6 +20,7 @@ public partial class MainWindow : Window
     private readonly ObservableCollection<string> templateChoices = [];
     private readonly App app = (App)Application.Current;
     private (int Success, int Failure)? lastSummary;
+    private bool isConverting;
 
     public MainWindow(IEnumerable<string> initialFiles)
     {
@@ -76,7 +78,7 @@ public partial class MainWindow : Window
 
     private void FilesGrid_DragOver(object sender, DragEventArgs e)
     {
-        e.Effects = e.Data.GetData(DataFormats.FileDrop) is string[] paths &&
+        e.Effects = !isConverting && e.Data.GetData(DataFormats.FileDrop) is string[] paths &&
             paths.Any(path => !Directory.Exists(path) && ConversionService.IsMarkdown(path))
             ? DragDropEffects.Copy : DragDropEffects.None;
         e.Handled = true;
@@ -84,13 +86,15 @@ public partial class MainWindow : Window
 
     private void FilesGrid_Drop(object sender, DragEventArgs e)
     {
-        if (e.Data.GetData(DataFormats.FileDrop) is string[] files)
+        if (!isConverting && e.Data.GetData(DataFormats.FileDrop) is string[] files)
             AddFiles(files);
         e.Handled = true;
     }
 
     private void AddFiles_Click(object sender, RoutedEventArgs e)
     {
+        if (isConverting)
+            return;
         var dialog = new OpenFileDialog { Filter = LanguageManager.Text("FilterMarkdown"), Multiselect = true };
         if (dialog.ShowDialog(this) == true)
             AddFiles(dialog.FileNames);
@@ -98,12 +102,36 @@ public partial class MainWindow : Window
 
     private void RemoveFiles_Click(object sender, RoutedEventArgs e)
     {
-        foreach (var row in FilesGrid.SelectedItems.Cast<FileRow>().ToArray())
+        if (isConverting)
+            return;
+        var selected = FilesGrid.SelectedItems.Cast<FileRow>().ToArray();
+        if (selected.Length == 0)
+            return;
+        foreach (var row in selected)
             Files.Remove(row);
         UpdateFileCount();
         lastSummary = null;
-        if (Files.Count == 0)
-            Status.Text = LanguageManager.Text("PromptAddFiles");
+        Status.Text = LanguageManager.Text(Files.Count == 0 ? "PromptAddFiles" : "PromptCheckSettings");
+    }
+
+    private void RemoveMenu_Click(object sender, RoutedEventArgs e)
+    {
+        var menu = RemoveMenuButton.ContextMenu;
+        if (menu is null || isConverting)
+            return;
+        menu.PlacementTarget = RemoveSelectedButton;
+        menu.Placement = PlacementMode.Bottom;
+        menu.IsOpen = true;
+    }
+
+    private void ClearFiles_Click(object sender, RoutedEventArgs e)
+    {
+        if (isConverting)
+            return;
+        Files.Clear();
+        UpdateFileCount();
+        lastSummary = null;
+        Status.Text = LanguageManager.Text("PromptAddFiles");
     }
 
     private void OutputBrowse_Click(object sender, RoutedEventArgs e)
@@ -266,6 +294,8 @@ public partial class MainWindow : Window
                 return;
             options.Overwrite = true;
         }
+        isConverting = true;
+        FileActions.IsEnabled = false;
         ConvertButton.IsEnabled = false;
         Status.Text = LanguageManager.Text("Converting");
         foreach (var row in Files)
@@ -299,7 +329,12 @@ public partial class MainWindow : Window
                 AppDialog.ShowMessage(this, string.Join("\n", results.Where(x => !x.Success).Select(x => Path.GetFileName(x.Path) + ": " + x.Error)), LanguageManager.Text("DialogConversionError"));
         }
         catch (Exception ex) { Status.Text = ex.Message; AppDialog.ShowMessage(this, ex.Message, LanguageManager.Text("DialogConversionError")); }
-        finally { ConvertButton.IsEnabled = true; }
+        finally
+        {
+            isConverting = false;
+            FileActions.IsEnabled = true;
+            ConvertButton.IsEnabled = true;
+        }
     }
 }
 
