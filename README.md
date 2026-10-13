@@ -18,19 +18,40 @@ GUIの出力先は「元ファイルと同じ場所」（既定）と「指定�
 
 WebView2 Runtimeがない場合、GUIはMicrosoftのダウンロードページを案内します。CLIはURLを含むエラーを表示して終了します。ZIP版はRuntimeを同梱しません。インストーラ版は未導入時にMicrosoftのBootstrapperからRuntimeを導入します（ネットワーク接続が必要です）。
 
-CLIでは `--run` を指定します。オプション省略時はHTMLとPDFの両方を入力の隣に出力します。CLIの変換オプションはGUIに保存した既定値を参照しません。
-
 「既定の設定」の表示言語は「システムに合わせる・日本語・英語」から選べます。画面の表示は選択時に切り替わり、保存すると次回起動にも適用されます。CLIのヘルプ、警告、エラーもこの言語設定を参照します。「システムに合わせる」ではWindowsの表示言語が日本語なら日本語、それ以外なら英語を使います。Markdown本文と出力テンプレートの内容は翻訳しません。
 
+### CLI
+
+GUIを開かずに変換するには `--run` と1個以上の `.md` または `.markdown` ファイルを指定します。複数ファイルをまとめて指定でき、パスに空白がある場合は引用符で囲みます。オプションを省略すると、各入力ファイルの隣に同名の `.html` と `.pdf` を作成します。CLIの変換オプションはGUIに保存した既定値を参照しません。
+
 ```text
-mdexport --run report.md
-mdexport --run report.md --format html -o C:\Output --template default
-mdexport --run report.md --format pdf --orientation landscape --fit-figures-to-page
-mdexport --run report.md --embed-images --encoding shift-jis --overwrite
-mdexport --help
+mdexport.exe --run <入力.md> [別の入力.markdown ...] [オプション]
 ```
 
-出力先に同名ファイルがある場合、CLIは `--overwrite` がなければ停止します。同じ変換回で出力パスが重複する場合は、書き込み前にバッチ全体を停止します。
+| オプション | 説明・省略時の動作 |
+| --- | --- |
+| `--run` | GUIを開かずに変換します。CLI変換では必須です。 |
+| `-o <フォルダー>` / `--output <フォルダー>` | すべての入力の出力先を指定します。省略時は各入力ファイルと同じフォルダーです。相対パスは現在の作業フォルダーから解決します。 |
+| `--template <名前または絶対パス>` | 使用するテンプレート。省略時は `default`。名前を指定すると `%APPDATA%\MarkdownExporter\Template\<名前>`、絶対パスを指定するとそのフォルダーを読み込みます。 |
+| `--format <形式>` | `html`、`pdf`、`both` から選びます。省略時は `both`。`html` と `pdf` はそれぞれ指定した形式のみ出力します。 |
+| `--embed-images` | HTMLのローカル画像をData URIで埋め込みます。省略時はHTMLの素材フォルダーへコピーします。 |
+| `--orientation <向き>` | PDFの用紙方向。`portrait`（A4縦）または `landscape`（A4横）を指定します。省略時は `portrait` です。 |
+| `--fit-figures-to-page` | PDFの画像・Mermaid図を印刷領域に収まるよう縮小します。省略時は適用しません。 |
+| `--encoding <文字コード>` | `auto`、`utf-8`、`shift-jis`、`euc-jp` から選びます。省略時は `auto`。UTF-8を優先し、それ以外はShift JIS／EUC-JPを自動判定します。判定できない場合はエラーになります。指定値はすべての入力に適用します。 |
+| `--overwrite` | 既存のHTML・PDFを上書きします。省略時は上書きしません。 |
+| `--help` / `-h` | コマンドのヘルプを表示します。 |
+
+PowerShellで配布フォルダーから実行する例:
+
+```powershell
+.\mdexport.exe --run .\report.md
+.\mdexport.exe --run .\chapter1.md ".\draft chapter.md" --format html -o "C:\Output Files" --template custom
+.\mdexport.exe --run .\report.md --format pdf --orientation landscape --fit-figures-to-page
+.\mdexport.exe --run .\legacy.md --encoding shift-jis --embed-images --overwrite
+.\mdexport.exe --help
+```
+
+`--overwrite` を指定せずに既存の出力ファイルがある場合、その入力は失敗し、ほかの入力の処理は続きます。複数の入力が同じ出力パスを使う場合は、書き込み前に変換全体を停止します。終了コードは成功・ヘルプ表示が `0`、変換失敗が `1`、引数の誤りが `2` です。
 
 ## テンプレート
 
