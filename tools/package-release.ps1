@@ -15,10 +15,8 @@ if (Test-Path -LiteralPath $stage) {
 }
 New-Item -ItemType Directory -Path $stage | Out-Null
 
-foreach ($file in @('mdexport.exe', 'THIRD-PARTY-NOTICES.txt', 'PDFsharp-LICENSE.txt')) {
-    Copy-Item -LiteralPath (Join-Path $publish $file) -Destination $stage
-}
-foreach ($folder in @('Template', 'WebAssets')) {
+Copy-Item -LiteralPath (Join-Path $publish 'mdexport.exe') -Destination $stage
+foreach ($folder in @('Template', 'WebAssets', 'Licence')) {
     Copy-Item -LiteralPath (Join-Path $publish $folder) -Destination $stage -Recurse
 }
 foreach ($file in @('README.md', 'README.en.md')) {

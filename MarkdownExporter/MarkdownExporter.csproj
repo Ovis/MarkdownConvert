@@ -28,7 +28,7 @@
   <ItemGroup>
     <Content Include="Template\default\**\*" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
     <Content Include="WebAssets\**\*" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
-    <Content Include="THIRD-PARTY-NOTICES.txt" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
-    <Content Include="PDFsharp-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <Content Include="..\Licence\**\*" Link="Licence\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <Content Include="..\LICENSE" Link="Licence\MarkdownExporter-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
 </Project>

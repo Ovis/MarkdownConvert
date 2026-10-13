@@ -52,4 +52,4 @@ dotnet publish MarkdownExporter/MarkdownExporter.csproj -c Release -r win-x64 -m
 
 `MarkdownExporter.Tests` はNUnitでCLI解析、文字コード、事前検査、素材・テンプレート、Markdown/PDFリンク、設定保存などのロジックを検証します。WebView2の描画と画面操作はこのテストには含みません。
 
-発行物には `mdexport.exe` と `Template/`、`WebAssets/`、`THIRD-PARTY-NOTICES.txt`、`PDFsharp-LICENSE.txt` を含めてください。`WebAssets` は `tools/web-assets/` で `npm ci` と `npm run build` により再生成できます。配布用ZIPとインストーラの構成は別途設計します。
+発行物には `mdexport.exe` と `Template/`、`WebAssets/`、`Licence/` を含めてください。サードパーティーの通知、NuGet依存の一覧とライセンスは `Licence/` にまとめています。KaTeXフォントのSIL Open Font License 1.1と著作権表示は `Licence/KaTeX-LICENSE.txt` に収録し、数式・Mermaidを含むHTMLの素材にもコピーします。`WebAssets` は `tools/web-assets/` で `npm ci` と `npm run build` により再生成できます。配布用ZIPとインストーラはこれらのファイルを同梱します。

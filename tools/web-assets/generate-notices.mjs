@@ -38,6 +38,6 @@ for (const item of entries) {
   lines.push('='.repeat(72), `${item.name} ${item.version} — ${item.license}`, '');
   if (item.text) lines.push(item.text.trim(), '');
 }
-const target = path.resolve('../../MarkdownExporter/THIRD-PARTY-NOTICES.txt');
+const target = path.resolve('../../Licence/THIRD-PARTY-NOTICES.txt');
 fs.writeFileSync(target, lines.join('\n').trimEnd() + '\n', 'utf8');
 console.log(`Wrote notices for ${entries.length} bundled packages`);

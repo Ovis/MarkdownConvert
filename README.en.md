@@ -52,4 +52,4 @@ dotnet publish MarkdownExporter/MarkdownExporter.csproj -c Release -r win-x64 -m
 
 `MarkdownExporter.Tests` uses NUnit to test logic such as CLI parsing, character encoding, preflight checks, assets and templates, Markdown and PDF links, and settings persistence. These tests do not cover WebView2 rendering or graphical interface interactions.
 
-Include `mdexport.exe`, `Template/`, `WebAssets/`, `THIRD-PARTY-NOTICES.txt`, and `PDFsharp-LICENSE.txt` in a published distribution. To rebuild `WebAssets`, run `npm ci` and `npm run build` in `tools/web-assets/`. The ZIP and installer packaging are to be designed separately.
+Include `mdexport.exe`, `Template/`, `WebAssets/`, and `Licence/` in a published distribution. Third-party notices, the NuGet dependency inventory, and license texts are collected in `Licence/`. `Licence/KaTeX-LICENSE.txt` contains the SIL Open Font License 1.1 and copyright notices for the KaTeX fonts; it is also copied alongside fonts in HTML output containing math or Mermaid. To rebuild `WebAssets`, run `npm ci` and `npm run build` in `tools/web-assets/`. The ZIP and installer include these files.

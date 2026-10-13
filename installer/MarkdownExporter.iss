@@ -45,8 +45,7 @@ Name: "desktopicon"; Description: "{cm:DesktopShortcut}"; Flags: unchecked
 Source: "{#PublishDir}\mdexport.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PublishDir}\Template\*"; DestDir: "{app}\Template"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#PublishDir}\WebAssets\*"; DestDir: "{app}\WebAssets"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#PublishDir}\THIRD-PARTY-NOTICES.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#PublishDir}\PDFsharp-LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#PublishDir}\Licence\*"; DestDir: "{app}\Licence"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\README.en.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BootstrapperPath}"; DestName: "MicrosoftEdgeWebview2Setup.exe"; Flags: dontcopy

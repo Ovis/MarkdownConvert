@@ -105,6 +105,24 @@ public sealed class MarkdownDocumentBuilderTests
         });
     }
 
+    [Test]
+    public void Build_Math_CopiesKaTeXLicenseWithFonts()
+    {
+        using var folder = new TestFolder();
+        var input = folder.Write("report.md", "<span class=\"math\">x</span>");
+        var output = folder.PathFor("output");
+
+        var html = Build(input, File.ReadAllText(input), output, new ConversionOptions());
+        var license = folder.PathFor("output/report_assets/template/fonts/LICENSE-KaTeX.txt");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(html, Does.Contain("report_assets/template/fonts/KaTeX_Main-Regular.woff2"));
+            Assert.That(File.Exists(license), Is.True);
+            Assert.That(File.ReadAllText(license), Does.Contain("SIL OPEN FONT LICENSE Version 1.1"));
+        });
+    }
+
     private static string Build(string input, string markdown, string output, ConversionOptions options,
         IReadOnlyDictionary<string, string>? targets = null)
     {
