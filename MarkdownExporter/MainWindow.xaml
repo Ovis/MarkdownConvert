@@ -13,9 +13,27 @@
                     <Grid>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <TextBlock x:Name="FileCount" Style="{StaticResource UiStyle.SectionHeading}" VerticalAlignment="Center"/>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <StackPanel x:Name="FileActions" Grid.Column="1" Orientation="Horizontal">
                             <Button Content="{loc:Tr AddFiles}" Click="AddFiles_Click" Margin="0,0,6,0"/>
-                            <Button Content="{loc:Tr RemoveSelected}" Click="RemoveFiles_Click" Style="{StaticResource UiStyle.QuietButton}"/>
+                            <Button x:Name="RemoveSelectedButton" Content="{loc:Tr RemoveSelected}" Click="RemoveFiles_Click"
+                                    Style="{StaticResource UiStyle.QuietButton}"/>
+                            <Border Width="1" Height="16" Margin="1,0" VerticalAlignment="Center"
+                                    Background="{DynamicResource UiBrush.Border}"/>
+                            <Button x:Name="RemoveMenuButton" Click="RemoveMenu_Click"
+                                    Style="{StaticResource UiStyle.SplitMenuButton}"
+                                    AutomationProperties.Name="{loc:Tr RemoveMenu}"
+                                    ToolTip="{loc:Tr RemoveMenu}">
+                                <Button.Content>
+                                    <Path Data="M 1 1 L 5 5 L 9 1" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                          StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                </Button.Content>
+                                <Button.ContextMenu>
+                                    <ContextMenu Style="{StaticResource UiStyle.ActionMenu}">
+                                        <MenuItem Header="{loc:Tr ClearList}" Click="ClearFiles_Click"
+                                                  Style="{StaticResource UiStyle.ActionMenuItem}"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="2">

@@ -8,6 +8,8 @@
   <data name="ConvertCount" xml:space="preserve"><value>Convert ({0})</value></data>
   <data name="AddFiles" xml:space="preserve"><value>Add files</value></data>
   <data name="RemoveSelected" xml:space="preserve"><value>Remove selected</value></data>
+  <data name="RemoveMenu" xml:space="preserve"><value>Open removal menu</value></data>
+  <data name="ClearList" xml:space="preserve"><value>Clear list</value></data>
   <data name="File" xml:space="preserve"><value>File</value></data>
   <data name="Encoding" xml:space="preserve"><value>Encoding</value></data>
   <data name="EncodingAuto" xml:space="preserve"><value>Auto</value></data>
