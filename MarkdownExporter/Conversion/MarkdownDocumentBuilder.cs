@@ -94,13 +94,15 @@ public sealed class MarkdownDocumentBuilder
 
         if (content.Contains("class=\"math\"", StringComparison.Ordinal) || content.Contains("class=\"mermaid\"", StringComparison.Ordinal))
         {
-            var katexCss = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "WebAssets", "katex.min.css"));
+            var webAssets = Path.Combine(AppContext.BaseDirectory, "WebAssets");
+            var katexCss = File.ReadAllText(Path.Combine(webAssets, "katex.min.css"));
             katexCss = Regex.Replace(katexCss, @"url\((['""']?)(fonts/[^)'""']+)\1\)", match =>
             {
-                var font = Path.Combine(AppContext.BaseDirectory, "WebAssets", match.Groups[2].Value.Replace('/', Path.DirectorySeparatorChar));
+                var font = Path.Combine(webAssets, match.Groups[2].Value.Replace('/', Path.DirectorySeparatorChar));
                 var url = assets.Store(font, "template", match.Groups[2].Value);
                 return "url('" + url + "')";
             });
+            assets.Store(Path.Combine(AppContext.BaseDirectory, "Licence", "KaTeX-LICENSE.txt"), "template", "fonts/LICENSE-KaTeX.txt");
             css += "\n" + katexCss;
         }
         var htmlDocument = index.Replace("{{content}}", content, StringComparison.Ordinal)
