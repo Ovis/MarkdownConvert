@@ -20,7 +20,9 @@
   <data name="DefaultSettings" xml:space="preserve"><value>Default settings</value></data>
   <data name="OutputFormat" xml:space="preserve"><value>Output format</value></data>
   <data name="OutputDirectory" xml:space="preserve"><value>Output folder</value></data>
-  <data name="OutputDirectoryHint" xml:space="preserve"><value>Leave blank to use the source folder</value></data>
+  <data name="OutputSourceFolder" xml:space="preserve"><value>Beside each source file</value></data>
+  <data name="OutputCustomFolder" xml:space="preserve"><value>Specified folder</value></data>
+  <data name="OutputDirectoryRequired" xml:space="preserve"><value>Choose an output folder.</value></data>
   <data name="Browse" xml:space="preserve"><value>Browse…</value></data>
   <data name="Template" xml:space="preserve"><value>Template</value></data>
   <data name="HtmlImages" xml:space="preserve"><value>HTML images</value></data>
@@ -40,7 +42,6 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Use system language</value></data>
   <data name="Japanese" xml:space="preserve"><value>Japanese</value></data>
   <data name="English" xml:space="preserve"><value>English</value></data>
-  <data name="OutputDirectoryWithHint" xml:space="preserve"><value>Output folder (blank: source folder)</value></data>
   <data name="OpenTemplateFolder" xml:space="preserve"><value>Open folder</value></data>
   <data name="RefreshTemplateList" xml:space="preserve"><value>Refresh list</value></data>
   <data name="ResetDefaultTemplate" xml:space="preserve"><value>Reset default</value></data>

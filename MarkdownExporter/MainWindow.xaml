@@ -88,9 +88,13 @@
                                 <CheckBox x:Name="PdfCheck" Content="PDF" IsChecked="True"/>
                             </StackPanel>
                             <TextBlock Text="{loc:Tr OutputDirectory}" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                <TextBox x:Name="OutputText" Width="210" Height="{StaticResource UiSize.ControlHeight}"
-                                         ToolTip="{loc:Tr OutputDirectoryHint}"/>
+                            <RadioButton x:Name="SourceFolderRadio" Content="{loc:Tr OutputSourceFolder}"
+                                         GroupName="OutputFolder" IsChecked="True" Margin="0,0,0,2"/>
+                            <RadioButton x:Name="CustomFolderRadio" Content="{loc:Tr OutputCustomFolder}"
+                                         GroupName="OutputFolder" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12"
+                                        IsEnabled="{Binding IsChecked, ElementName=CustomFolderRadio}">
+                                <TextBox x:Name="OutputText" Width="210" Height="{StaticResource UiSize.ControlHeight}"/>
                                 <Button Content="{loc:Tr Browse}" Click="OutputBrowse_Click" Margin="5,0,0,0"/>
                             </StackPanel>
                             <TextBlock Text="{loc:Tr Template}" FontWeight="SemiBold" Margin="0,0,0,5"/>

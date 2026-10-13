@@ -33,7 +33,10 @@ public partial class DefaultsWindow : Window
         var defaults = app.Settings.Defaults;
         HtmlCheck.IsChecked = defaults.Format != ExportFormat.Pdf;
         PdfCheck.IsChecked = defaults.Format != ExportFormat.Html;
-        OutputText.Text = defaults.OutputDirectory ?? "";
+        var sourceFolder = string.IsNullOrWhiteSpace(defaults.OutputDirectory);
+        OutputText.Text = sourceFolder ? "" : defaults.OutputDirectory!.Trim();
+        SourceFolderRadio.IsChecked = sourceFolder;
+        CustomFolderRadio.IsChecked = !sourceFolder;
         RefreshTemplates();
         SelectTemplate(defaults.Template);
         EmbedCheck.IsChecked = defaults.EmbedImages;
@@ -116,11 +119,16 @@ public partial class DefaultsWindow : Window
             AppDialog.ShowMessage(this, LanguageManager.Text("SelectHtmlOrPdf"), LanguageManager.Text("DialogSettingsError"));
             return;
         }
+        if (CustomFolderRadio.IsChecked == true && string.IsNullOrWhiteSpace(OutputText.Text))
+        {
+            AppDialog.ShowMessage(this, LanguageManager.Text("OutputDirectoryRequired"), LanguageManager.Text("DialogSettingsError"));
+            return;
+        }
         var options = new ConversionOptions
         {
             Format = HtmlCheck.IsChecked == true && PdfCheck.IsChecked == true ? ExportFormat.Both
                 : HtmlCheck.IsChecked == true ? ExportFormat.Html : ExportFormat.Pdf,
-            OutputDirectory = string.IsNullOrWhiteSpace(OutputText.Text) ? null : OutputText.Text.Trim(),
+            OutputDirectory = SourceFolderRadio.IsChecked == true ? null : OutputText.Text.Trim(),
             Template = (TemplateCombo.SelectedItem as string ?? "").Trim(),
             EmbedImages = EmbedCheck.IsChecked == true,
             Orientation = LandscapeRadio.IsChecked == true ? PageOrientation.Landscape : PageOrientation.Portrait,

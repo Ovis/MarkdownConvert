@@ -141,11 +141,13 @@ public partial class MainWindow : Window
     {
         if (HtmlCheck.IsChecked != true && PdfCheck.IsChecked != true)
             throw new InvalidOperationException(LanguageManager.Text("SelectHtmlOrPdf"));
+        if (CustomFolderRadio.IsChecked == true && string.IsNullOrWhiteSpace(OutputText.Text))
+            throw new InvalidOperationException(LanguageManager.Text("OutputDirectoryRequired"));
         return new ConversionOptions
         {
             Format = HtmlCheck.IsChecked == true && PdfCheck.IsChecked == true ? ExportFormat.Both
                 : HtmlCheck.IsChecked == true ? ExportFormat.Html : ExportFormat.Pdf,
-            OutputDirectory = string.IsNullOrWhiteSpace(OutputText.Text) ? null : OutputText.Text.Trim(),
+            OutputDirectory = SourceFolderRadio.IsChecked == true ? null : OutputText.Text.Trim(),
             Template = (TemplateCombo.SelectedItem as string ?? "").Trim(),
             EmbedImages = EmbedCheck.IsChecked == true,
             Orientation = LandscapeRadio.IsChecked == true ? PageOrientation.Landscape : PageOrientation.Portrait,
@@ -157,12 +159,20 @@ public partial class MainWindow : Window
     {
         HtmlCheck.IsChecked = options.Format != ExportFormat.Pdf;
         PdfCheck.IsChecked = options.Format != ExportFormat.Html;
-        OutputText.Text = options.OutputDirectory ?? "";
+        ApplyOutputDirectory(options.OutputDirectory);
         SelectTemplate(options.Template);
         EmbedCheck.IsChecked = options.EmbedImages;
         PortraitRadio.IsChecked = options.Orientation == PageOrientation.Portrait;
         LandscapeRadio.IsChecked = options.Orientation == PageOrientation.Landscape;
         FitCheck.IsChecked = options.FitFiguresToPage;
+    }
+
+    private void ApplyOutputDirectory(string? directory)
+    {
+        var sourceFolder = string.IsNullOrWhiteSpace(directory);
+        OutputText.Text = sourceFolder ? "" : directory!.Trim();
+        SourceFolderRadio.IsChecked = sourceFolder;
+        CustomFolderRadio.IsChecked = !sourceFolder;
     }
 
     private void RestoreDefaults_Click(object sender, RoutedEventArgs e) => ApplyOptions(app.Settings.Defaults);
@@ -189,7 +199,7 @@ public partial class MainWindow : Window
             PdfCheck.IsChecked = saved.Format != ExportFormat.Html;
         }
         if (changes.OutputDirectoryChanged)
-            OutputText.Text = saved.OutputDirectory ?? "";
+            ApplyOutputDirectory(saved.OutputDirectory);
         if (changes.TemplateChanged)
             SelectTemplate(saved.Template);
         if (changes.EmbedImagesChanged)
