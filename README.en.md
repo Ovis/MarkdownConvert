@@ -14,6 +14,8 @@ MarkdownExporter is a Windows application that converts Markdown files to HTML a
 
 Run `mdexport.exe` to open the graphical interface. Drop Markdown files onto the executable, a shortcut, or the open window to add them to the file list. Review the settings, then click Convert.
 
+For output, choose "Beside each source file" (the default) or "Specified folder" in the GUI. The first choice writes beside each Markdown file; the second writes to a shared folder. You can save the same choice in Default Settings.
+
 If WebView2 Runtime is missing, the graphical interface offers to open Microsoft's download page. The CLI exits with an error containing the URL. The ZIP does not bundle the Runtime. The installer uses Microsoft's Bootstrapper to install it when needed and requires an internet connection for that step.
 
 For command-line conversion, specify `--run`. With no conversion options, the CLI writes both HTML and PDF next to each input file. CLI conversion options do not use the defaults saved in the graphical interface.

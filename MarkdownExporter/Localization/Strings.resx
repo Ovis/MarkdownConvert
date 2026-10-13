@@ -20,7 +20,9 @@
   <data name="DefaultSettings" xml:space="preserve"><value>既定の設定</value></data>
   <data name="OutputFormat" xml:space="preserve"><value>出力形式</value></data>
   <data name="OutputDirectory" xml:space="preserve"><value>出力先</value></data>
-  <data name="OutputDirectoryHint" xml:space="preserve"><value>空欄なら元ファイルと同じ場所</value></data>
+  <data name="OutputSourceFolder" xml:space="preserve"><value>元ファイルと同じ場所</value></data>
+  <data name="OutputCustomFolder" xml:space="preserve"><value>指定したフォルダー</value></data>
+  <data name="OutputDirectoryRequired" xml:space="preserve"><value>出力先フォルダーを指定してください。</value></data>
   <data name="Browse" xml:space="preserve"><value>参照…</value></data>
   <data name="Template" xml:space="preserve"><value>テンプレート</value></data>
   <data name="HtmlImages" xml:space="preserve"><value>HTML画像</value></data>
@@ -40,7 +42,6 @@
   <data name="LanguageSystem" xml:space="preserve"><value>システムに合わせる</value></data>
   <data name="Japanese" xml:space="preserve"><value>日本語</value></data>
   <data name="English" xml:space="preserve"><value>英語</value></data>
-  <data name="OutputDirectoryWithHint" xml:space="preserve"><value>出力先（空欄なら元ファイルと同じ場所）</value></data>
   <data name="OpenTemplateFolder" xml:space="preserve"><value>フォルダを開く</value></data>
   <data name="RefreshTemplateList" xml:space="preserve"><value>一覧を更新</value></data>
   <data name="ResetDefaultTemplate" xml:space="preserve"><value>defaultを初期化</value></data>

@@ -35,6 +35,20 @@ public sealed class ConversionPreflightTests
     }
 
     [Test]
+    public void Preflight_SameStemInSeparateSourceFolders_DoesNotCollide()
+    {
+        using var folder = new TestFolder();
+        var first = folder.Write("a/report.md", "first");
+        var second = folder.Write("b/report.markdown", "second");
+
+        var issues = ConversionService.Preflight([
+            new InputFile(first, InputEncoding.Auto), new InputFile(second, InputEncoding.Auto)
+        ], new ConversionOptions());
+
+        Assert.That(issues, Is.Empty);
+    }
+
+    [Test]
     public void Preflight_ExistingOutput_RequiresOverwrite()
     {
         using var folder = new TestFolder();

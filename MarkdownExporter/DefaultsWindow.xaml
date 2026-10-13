@@ -23,8 +23,13 @@
                         <CheckBox x:Name="HtmlCheck" Content="HTML" Margin="0,0,18,0"/>
                         <CheckBox x:Name="PdfCheck" Content="PDF"/>
                     </StackPanel>
-                    <TextBlock Text="{loc:Tr OutputDirectoryWithHint}" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,13">
+                    <TextBlock Text="{loc:Tr OutputDirectory}" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <RadioButton x:Name="SourceFolderRadio" Content="{loc:Tr OutputSourceFolder}"
+                                 GroupName="OutputFolder" IsChecked="True" Margin="0,0,0,2"/>
+                    <RadioButton x:Name="CustomFolderRadio" Content="{loc:Tr OutputCustomFolder}"
+                                 GroupName="OutputFolder" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,13"
+                                IsEnabled="{Binding IsChecked, ElementName=CustomFolderRadio}">
                         <TextBox x:Name="OutputText" Width="340" Height="{StaticResource UiSize.ControlHeight}"/>
                         <Button Content="{loc:Tr Browse}" Click="OutputBrowse_Click" Margin="5,0,0,0"/>
                     </StackPanel>
