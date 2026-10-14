@@ -44,13 +44,9 @@ public sealed class MarkdownDocumentBuilder
         foreach (var anchor in document.QuerySelectorAll("a[href]"))
         {
             var url = anchor.GetAttribute("href")!;
-            if (!IsLocal(url))
+            if (!LinkedMarkdownLinks.TryResolve(sourceDirectory, url, out var local))
                 continue;
             var split = SplitUrl(url);
-            if (!split.Path.EndsWith(".md", StringComparison.OrdinalIgnoreCase) &&
-                !split.Path.EndsWith(".markdown", StringComparison.OrdinalIgnoreCase))
-                continue;
-            var local = Resolve(sourceDirectory, url);
             if (htmlTargets.TryGetValue(local, out var html))
             {
                 anchor.SetAttribute("href", RelativeUrl(outputDirectory, html) + split.Suffix);
@@ -157,7 +153,7 @@ public sealed class MarkdownDocumentBuilder
 
     private static bool IsLocal(string url) => !url.StartsWith('#') && !url.StartsWith("//") &&
         !Uri.TryCreate(url, UriKind.Absolute, out _);
-    private static (string Path, string Suffix) SplitUrl(string url)
+    internal static (string Path, string Suffix) SplitUrl(string url)
     {
         var split = url.IndexOfAny(['?', '#']);
         return split < 0 ? (url, "") : (url[..split], url[split..]);
@@ -167,7 +163,7 @@ public sealed class MarkdownDocumentBuilder
         var path = Uri.UnescapeDataString(SplitUrl(url).Path).Replace('/', Path.DirectorySeparatorChar);
         return Path.GetFullPath(Path.Combine(directory, path));
     }
-    private static string RelativeUrl(string fromDirectory, string destination)
+    internal static string RelativeUrl(string fromDirectory, string destination)
     {
         var relative = Path.GetRelativePath(fromDirectory, destination);
         return string.Join("/", relative.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)

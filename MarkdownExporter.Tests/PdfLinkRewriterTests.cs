@@ -120,6 +120,30 @@ public sealed class PdfLinkRewriterTests
         Assert.That(File.Exists(output), Is.False);
     }
 
+    [Test]
+    public async Task RewriteLocalPdfLinks_UnconvertedMarkdown_RestoresOriginalRelativeLink()
+    {
+        using var folder = new TestFolder();
+        var input = folder.PathFor("input.pdf");
+        var output = folder.PathFor("portable.pdf");
+        var target = folder.PathFor("docs/next.md");
+        var absolute = new Uri(target).AbsoluteUri + "#section";
+        await CreatePdfAsync(input, absolute);
+
+        var changed = await PdfLinkRewriter.RewriteLocalPdfLinksAsync(input, output, output, QpdfPath,
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                [absolute] = "docs/next.md#section"
+            });
+
+        var actions = await ReadActionsAsync(output);
+        Assert.Multiple(() =>
+        {
+            Assert.That(changed, Is.True);
+            Assert.That(actions[0]["/URI"]?.GetValue<string>(), Is.EqualTo("u:docs/next.md#section"));
+        });
+    }
+
     private static Task CreatePdfAsync(string path, params string[] urls) => CreatePdfAsync(path, urls, false);
 
     private static async Task CreatePdfAsync(string path, string[] urls, bool indirectAction)

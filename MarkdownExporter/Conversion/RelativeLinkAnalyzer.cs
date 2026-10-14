@@ -10,17 +10,18 @@ internal static class RelativeLinkAnalyzer
             return [];
 
         var outputDirectory = Path.GetFullPath(options.OutputDirectory);
-        var htmlTargets = HtmlTargets(inputs, options.Format);
+        var plan = ConversionPlan.Create(inputs, options);
+        var convertedTargets = plan.Documents.Select(x => x.Path).ToHashSet(StringComparer.OrdinalIgnoreCase);
         var risks = new List<RelativeLinkRisk>();
-        foreach (var input in inputs)
+        foreach (var input in plan.Documents)
         {
-            var path = Path.GetFullPath(input.Path);
+            var path = input.Path;
             if (Path.GetDirectoryName(path)!.Equals(outputDirectory, StringComparison.OrdinalIgnoreCase) || !File.Exists(path))
                 continue;
 
             try
             {
-                var links = Find(path, EncodingReader.Read(path, input.Encoding), outputDirectory, htmlTargets);
+                var links = Find(path, EncodingReader.Read(path, input.Input.Encoding), outputDirectory, convertedTargets);
                 if (links.Count > 0)
                     risks.Add(new RelativeLinkRisk(path, links));
             }
@@ -32,11 +33,6 @@ internal static class RelativeLinkAnalyzer
         }
         return risks;
     }
-
-    public static IReadOnlySet<string> HtmlTargets(IReadOnlyList<InputFile> inputs, ExportFormat format) =>
-        format is ExportFormat.Html or ExportFormat.Both
-            ? inputs.Select(x => Path.GetFullPath(x.Path)).ToHashSet(StringComparer.OrdinalIgnoreCase)
-            : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
     public static IReadOnlyList<string> Find(string inputPath, string markdown, string outputDirectory,
         IReadOnlySet<string> htmlTargets)

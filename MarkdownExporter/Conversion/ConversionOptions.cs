@@ -29,6 +29,7 @@ public sealed class ConversionOptions
     public bool EmbedImages { get; set; }
     public PageOrientation Orientation { get; set; }
     public bool FitFiguresToPage { get; set; }
+    public bool FollowMarkdownLinks { get; set; }
     public bool Overwrite { get; set; }
     public InputEncoding Encoding { get; set; } = InputEncoding.Auto;
 

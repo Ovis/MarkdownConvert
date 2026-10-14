@@ -28,7 +28,7 @@ public sealed class RelativeLinkAnalyzerTests
     }
 
     [Test]
-    public void Scan_SkipsMarkdownConvertedToHtmlButWarnsForPdfOnly()
+    public void Scan_SkipsMarkdownConvertedInEitherFormat()
     {
         using var folder = new TestFolder();
         var input = folder.Write("source/report.md", "[Next](next.md)");
@@ -39,12 +39,6 @@ public sealed class RelativeLinkAnalyzerTests
         Assert.That(RelativeLinkAnalyzer.Scan(files, options), Is.Empty);
 
         options.Format = ExportFormat.Pdf;
-        var risks = RelativeLinkAnalyzer.Scan(files, options);
-        Assert.Multiple(() =>
-        {
-            Assert.That(risks, Has.Count.EqualTo(1));
-            Assert.That(risks[0].Path, Is.EqualTo(input));
-            Assert.That(risks[0].Links, Is.EquivalentTo(new[] { "next.md" }));
-        });
+        Assert.That(RelativeLinkAnalyzer.Scan(files, options), Is.Empty);
     }
 }

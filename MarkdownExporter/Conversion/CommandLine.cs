@@ -43,6 +43,9 @@ public static class CommandLineParser
                 case "--fit-figures-to-page":
                     options.FitFiguresToPage = true;
                     break;
+                case "--follow-markdown-links":
+                    options.FollowMarkdownLinks = true;
+                    break;
                 case "--overwrite":
                     options.Overwrite = true;
                     break;
@@ -95,6 +98,7 @@ public static class CommandLineParser
           --embed-images               {LanguageManager.Text("CliEmbedDesc")}
           --orientation portrait|landscape  {LanguageManager.Text("CliOrientationDesc")}
           --fit-figures-to-page        {LanguageManager.Text("CliFitDesc")}
+          --follow-markdown-links      {LanguageManager.Text("CliFollowMarkdownDesc")}
           --encoding auto|utf-8|shift-jis|euc-jp  {LanguageManager.Text("CliEncodingDesc")}
           --overwrite                  {LanguageManager.Text("CliOverwriteDesc")}
         """;

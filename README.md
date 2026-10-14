@@ -16,7 +16,7 @@ Markdownファイルをドラッグ＆ドロップ、GUI、CLIからHTMLとPDF�
 
 GUIの出力先は「元ファイルと同じ場所」（既定）と「指定したフォルダー」から選べます。前者は各Markdownファイルの隣に出力し、後者は指定した共通フォルダーに出力します。「既定の設定」でも同じ選択を保存できます。
 
-指定したフォルダーへ出力する際、元ファイルを基準とするローカル相対リンクの参照先が変わる可能性があれば、GUIは変換前に確認します。続行した場合も、該当ファイルの結果に警告を残します。リンク先のファイルは自動コピーせず、該当リンクも書き換えません。一緒にHTML化するMarkdownへのリンクは、生成先のHTMLを指すように変換します。
+指定したフォルダーへ出力する際、元ファイルを基準とするローカル相対リンクの参照先が変わる可能性があれば、GUIは変換前に確認します。続行した場合も、該当ファイルの結果に警告を残します。変換対象外のリンク先ファイルは自動コピーせず、該当リンクも書き換えません。変換できたMarkdownへのリンクは、生成したHTMLまたはPDFを指すように変換します。
 
 WebView2 Runtimeがない場合、GUIはMicrosoftのダウンロードページを案内します。CLIはURLを含むエラーを表示して終了します。ZIP版はRuntimeを同梱しません。インストーラ版は未導入時にMicrosoftのBootstrapperからRuntimeを導入します（ネットワーク接続が必要です）。
 
@@ -27,6 +27,8 @@ WebView2 Runtimeがない場合、GUIはMicrosoftのダウンロードページ�
 ### CLI
 
 GUIを開かずに変換するには `--run` と1個以上の `.md` または `.markdown` ファイルを指定します。複数ファイルをまとめて指定でき、パスに空白がある場合は引用符で囲みます。オプションを省略すると、各入力ファイルの隣に同名の `.html` と `.pdf` を作成します。CLIの変換オプションはGUIに保存した既定値を参照しません。
+
+GUIの「リンク先のMarkdownも変換」またはCLIの `--follow-markdown-links` を指定すると、ローカルの相対Markdownリンクを再帰的にたどり、見つかったファイルも変換します。省略時は明示的に追加したファイルだけを変換します。変換できたMarkdown同士のリンクは、HTMLからはHTML、PDFからはPDFへ向けます。
 
 ```text
 mdexport.exe --run <入力.md> [別の入力.markdown ...] [オプション]
@@ -41,6 +43,7 @@ mdexport.exe --run <入力.md> [別の入力.markdown ...] [オプション]
 | `--embed-images` | HTMLのローカル画像をData URIで埋め込みます。省略時はHTMLの素材フォルダーへコピーします。 |
 | `--orientation <向き>` | PDFの用紙方向。`portrait`（A4縦）または `landscape`（A4横）を指定します。省略時は `portrait` です。 |
 | `--fit-figures-to-page` | PDFの画像・Mermaid図を印刷領域に収まるよう縮小します。省略時は適用しません。 |
+| `--follow-markdown-links` | ローカルのMarkdownリンクを再帰的にたどり、リンク先も変換します。省略時は指定ファイルのみ変換します。 |
 | `--encoding <文字コード>` | `auto`、`utf-8`、`shift-jis`、`euc-jp` から選びます。省略時は `auto`。UTF-8を優先し、それ以外はShift JIS／EUC-JPを自動判定します。判定できない場合はエラーになります。指定値はすべての入力に適用します。 |
 | `--overwrite` | 既存のHTML・PDFを上書きします。省略時は上書きしません。 |
 | `--help` / `-h` | コマンドのヘルプを表示します。 |
@@ -52,10 +55,11 @@ PowerShellで配布フォルダーから実行する例:
 .\mdexport.exe --run .\chapter1.md ".\draft chapter.md" --format html -o "C:\Output Files" --template custom
 .\mdexport.exe --run .\report.md --format pdf --orientation landscape --fit-figures-to-page
 .\mdexport.exe --run .\legacy.md --encoding shift-jis --embed-images --overwrite
+.\mdexport.exe --run .\index.md --format both --follow-markdown-links --output .\out
 .\mdexport.exe --help
 ```
 
-`--overwrite` を指定せずに既存の出力ファイルがある場合、その入力は失敗し、ほかの入力の処理は続きます。複数の入力が同じ出力パスを使う場合は、書き込み前に変換全体を停止します。終了コードは成功・ヘルプ表示が `0`、変換失敗が `1`、引数の誤りが `2` です。
+`--overwrite` を指定せずに既存の出力ファイルがある場合、その入力は失敗し、ほかの入力の処理は続きます。同じ出力先でファイル名が重なるときは `intro.html`、`intro-2.html` のように連番を付けます。元のファイル名を先に確保するため、元から `intro-2.md` があればその名前を優先します。親フォルダー名は出力名に含めません。終了コードは成功・ヘルプ表示が `0`、変換失敗が `1`、引数の誤りが `2` です。
 
 CLIで `--output` を指定し、ローカル相対リンクの参照先が変わる可能性がある場合は、確認せずに変換して標準エラー出力に警告を表示します。警告だけでは終了コードは変わりません。
 

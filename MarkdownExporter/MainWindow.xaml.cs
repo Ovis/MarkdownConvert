@@ -51,7 +51,7 @@ public partial class MainWindow : Window
     private void UpdateFileCount()
     {
         FileCount.Text = LanguageManager.Format("FilesCount", Files.Count);
-        ConvertButton.Content = LanguageManager.Format("ConvertCount", Files.Count);
+        ConvertButton.Content = LanguageManager.Format("ConvertCount", Files.Count(x => !x.IsLinked));
     }
 
     private void AddFiles(IEnumerable<string> paths)
@@ -60,8 +60,12 @@ public partial class MainWindow : Window
         foreach (var raw in paths)
         {
             var path = Path.GetFullPath(raw);
-            if (Files.Any(x => x.Path.Equals(path, StringComparison.OrdinalIgnoreCase)))
+            var existing = Files.FirstOrDefault(x => x.Path.Equals(path, StringComparison.OrdinalIgnoreCase));
+            if (existing is not null)
+            {
+                existing.IsLinked = false;
                 continue;
+            }
             if (Directory.Exists(path) || !ConversionService.IsMarkdown(path))
             {
                 Status.Text = LanguageManager.Format("OnlyMarkdown", raw);
@@ -179,7 +183,8 @@ public partial class MainWindow : Window
             Template = (TemplateCombo.SelectedItem as string ?? "").Trim(),
             EmbedImages = EmbedCheck.IsChecked == true,
             Orientation = LandscapeRadio.IsChecked == true ? PageOrientation.Landscape : PageOrientation.Portrait,
-            FitFiguresToPage = FitCheck.IsChecked == true
+            FitFiguresToPage = FitCheck.IsChecked == true,
+            FollowMarkdownLinks = FollowMarkdownCheck.IsChecked == true
         };
     }
 
@@ -193,6 +198,7 @@ public partial class MainWindow : Window
         PortraitRadio.IsChecked = options.Orientation == PageOrientation.Portrait;
         LandscapeRadio.IsChecked = options.Orientation == PageOrientation.Landscape;
         FitCheck.IsChecked = options.FitFiguresToPage;
+        FollowMarkdownCheck.IsChecked = options.FollowMarkdownLinks;
     }
 
     private void ApplyOutputDirectory(string? directory)
@@ -239,6 +245,8 @@ public partial class MainWindow : Window
         }
         if (changes.FitFiguresToPageChanged)
             FitCheck.IsChecked = saved.FitFiguresToPage;
+        if (changes.FollowMarkdownLinksChanged)
+            FollowMarkdownCheck.IsChecked = saved.FollowMarkdownLinks;
     }
 
     public void ShowWebView2Missing()
@@ -262,7 +270,7 @@ public partial class MainWindow : Window
     {
         if (isConverting)
             return;
-        if (Files.Count == 0)
+        if (!Files.Any(x => !x.IsLinked))
         {
             Status.Text = LanguageManager.Text("PromptAddFiles");
             return;
@@ -278,29 +286,26 @@ public partial class MainWindow : Window
             options = ReadOptions();
         }
         catch (Exception ex) { AppDialog.ShowMessage(this, ex.Message, LanguageManager.Text("DialogSettingsError")); return; }
+        foreach (var linked in Files.Where(x => x.IsLinked).ToArray())
+            Files.Remove(linked);
+        UpdateFileCount();
         var inputs = Files.Select(x => new InputFile(x.Path, x.SelectedEncoding)).ToArray();
-        var preflight = ConversionService.Preflight(inputs, options);
-        var existing = preflight.Where(x => x.Kind == PreflightIssueKind.OutputExists).ToArray();
-        var other = preflight.Except(existing).ToArray();
-        var collisions = other.Where(x => x.Kind == PreflightIssueKind.DuplicateOutput).ToArray();
-        if (collisions.Length > 0)
-        {
-            AppDialog.ShowMessage(this, string.Join("\n", collisions.Select(x => x.Message)), LanguageManager.Text("DialogCannotConvert"));
-            return;
-        }
-        if (existing.Length > 0)
-        {
-            var answer = AppDialog.Confirm(this, LanguageManager.Format("OverwritePrompt", string.Join("\n", existing.Select(x => x.Message))),
-                LanguageManager.Text("DialogConfirmation"));
-            if (!answer)
-                return;
-            options.Overwrite = true;
-        }
         isConverting = true;
         FileActions.IsEnabled = false;
         ConvertButton.IsEnabled = false;
         try
         {
+            Status.Text = LanguageManager.Text("CheckingRelativeLinks");
+            var preflight = await Task.Run(() => ConversionService.Preflight(inputs, options));
+            var existing = preflight.Where(x => x.Kind == PreflightIssueKind.OutputExists).ToArray();
+            if (existing.Length > 0)
+            {
+                var answer = AppDialog.Confirm(this, LanguageManager.Format("OverwritePrompt", string.Join("\n", existing.Select(x => x.Message))),
+                    LanguageManager.Text("DialogConfirmation"));
+                if (!answer)
+                    return;
+                options.Overwrite = true;
+            }
             Status.Text = LanguageManager.Text("CheckingRelativeLinks");
             var risks = await Task.Run(() => RelativeLinkAnalyzer.Scan(inputs, options));
             if (risks.Count > 0)
@@ -330,7 +335,7 @@ public partial class MainWindow : Window
             var results = await new ConversionService().ConvertAsync(inputs, options,
                 result =>
                 {
-                    var row = Files.First(x => x.Path.Equals(result.Path, StringComparison.OrdinalIgnoreCase));
+                    var row = FindOrAddRow(result.Path);
                     row.HtmlStatus = options.Format == ExportFormat.Pdf ? "NotApplicable" : result.HtmlSuccess ? "Success" : "Failure";
                     row.PdfStatus = options.Format == ExportFormat.Html ? "NotApplicable" : result.PdfSuccess ? "Success" : "Failure";
                     row.State = result.Error is not null ? "Failure" : result.Warnings.Count > 0 ? "Warning" : "Success";
@@ -339,7 +344,7 @@ public partial class MainWindow : Window
                 },
                 (path, state) =>
                 {
-                    var row = Files.First(x => x.Path.Equals(path, StringComparison.OrdinalIgnoreCase));
+                    var row = FindOrAddRow(path);
                     row.State = state;
                     Status.Text = $"{row.Name}: {LanguageManager.Text(state)}";
                 });
@@ -356,6 +361,17 @@ public partial class MainWindow : Window
             ConvertButton.IsEnabled = true;
         }
     }
+
+    private FileRow FindOrAddRow(string path)
+    {
+        var row = Files.FirstOrDefault(x => x.Path.Equals(path, StringComparison.OrdinalIgnoreCase));
+        if (row is not null)
+            return row;
+        row = new FileRow(path, true);
+        Files.Add(row);
+        UpdateFileCount();
+        return row;
+    }
 }
 
 public sealed class FileRow : INotifyPropertyChanged
@@ -364,19 +380,34 @@ public sealed class FileRow : INotifyPropertyChanged
     private string pdfStatusKey = "Waiting";
     private string stateKey = "Waiting";
     private string detail = "";
+    private bool isLinked;
     private EncodingOption selectedEncodingOption;
 
-    public FileRow(string path)
+    public FileRow(string path, bool isLinked = false)
     {
         Path = path;
+        IsLinked = isLinked;
         selectedEncodingOption = EncodingOptions[0];
     }
 
     public string Path { get; }
+    public bool IsLinked
+    {
+        get => isLinked;
+        set
+        {
+            isLinked = value;
+            Notify();
+            Notify(nameof(CanEditEncoding));
+            Notify(nameof(ToolTipText));
+        }
+    }
+    public bool CanEditEncoding => !IsLinked;
     public string Name => System.IO.Path.GetFileName(Path);
+    private string OriginText => IsLinked ? Environment.NewLine + LanguageManager.Text("LinkedMarkdownRow") : "";
     public string ToolTipText => string.IsNullOrEmpty(detail)
-        ? $"{Name}{Environment.NewLine}{Path}"
-        : $"{Name}{Environment.NewLine}{Path}{Environment.NewLine}{Environment.NewLine}{detail}";
+        ? $"{Name}{Environment.NewLine}{Path}{OriginText}"
+        : $"{Name}{Environment.NewLine}{Path}{OriginText}{Environment.NewLine}{Environment.NewLine}{detail}";
     public EncodingOption[] EncodingOptions { get; } =
     [
         new(InputEncoding.Auto, "EncodingAuto"),
@@ -424,6 +455,7 @@ public sealed class FileRow : INotifyPropertyChanged
         Notify(nameof(HtmlStatus));
         Notify(nameof(PdfStatus));
         Notify(nameof(State));
+        Notify(nameof(ToolTipText));
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

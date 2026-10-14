@@ -20,7 +20,7 @@ public sealed class ConversionPreflightTests
     }
 
     [Test]
-    public void Preflight_SameStemInOneOutputDirectory_ReportsCollision()
+    public void Preflight_SameStemInOneOutputDirectory_AssignsUniqueNames()
     {
         using var folder = new TestFolder();
         var first = folder.Write("a/report.md", "first");
@@ -31,7 +31,22 @@ public sealed class ConversionPreflightTests
             new InputFile(first, InputEncoding.Auto), new InputFile(second, InputEncoding.Auto)
         ], options);
 
-        Assert.That(issues.Count(x => x.Kind == PreflightIssueKind.DuplicateOutput), Is.EqualTo(2));
+        var plan = ConversionPlan.Create([
+            new InputFile(first, InputEncoding.Auto), new InputFile(second, InputEncoding.Auto)
+        ], options);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(issues, Is.Empty);
+            Assert.That(plan.Documents.Select(x => x.HtmlPath), Is.EquivalentTo(new[]
+            {
+                folder.PathFor("out/report.html"), folder.PathFor("out/report-2.html")
+            }));
+            Assert.That(plan.Documents.Select(x => x.PdfPath), Is.EquivalentTo(new[]
+            {
+                folder.PathFor("out/report.pdf"), folder.PathFor("out/report-2.pdf")
+            }));
+        });
     }
 
     [Test]

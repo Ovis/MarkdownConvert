@@ -34,6 +34,8 @@
   <data name="Landscape" xml:space="preserve"><value>Landscape</value></data>
   <data name="FigureDisplay" xml:space="preserve"><value>Figures</value></data>
   <data name="FitOnePage" xml:space="preserve"><value>Fit each figure on one page</value></data>
+  <data name="FollowMarkdownLinks" xml:space="preserve"><value>Convert linked Markdown files</value></data>
+  <data name="LinkedMarkdownRow" xml:space="preserve"><value>Added from a Markdown link (encoding: Auto)</value></data>
   <data name="RestoreDefaults" xml:space="preserve"><value>Restore defaults</value></data>
   <data name="Convert" xml:space="preserve"><value>Convert</value></data>
   <data name="Appearance" xml:space="preserve"><value>Appearance</value></data>
@@ -51,7 +53,6 @@
   <data name="Save" xml:space="preserve"><value>Save</value></data>
   <data name="DialogSettingsError" xml:space="preserve"><value>Settings error</value></data>
   <data name="DialogConversionError" xml:space="preserve"><value>Conversion error</value></data>
-  <data name="DialogCannotConvert" xml:space="preserve"><value>Cannot convert</value></data>
   <data name="DialogConfirmation" xml:space="preserve"><value>Confirm</value></data>
   <data name="DialogYes" xml:space="preserve"><value>Yes</value></data>
   <data name="DialogNo" xml:space="preserve"><value>No</value></data>
@@ -88,18 +89,19 @@
   <data name="CliEmbedDesc" xml:space="preserve"><value>Embed images in HTML</value></data>
   <data name="CliOrientationDesc" xml:space="preserve"><value>PDF orientation</value></data>
   <data name="CliFitDesc" xml:space="preserve"><value>Scale PDF figures to fit a page</value></data>
+  <data name="CliFollowMarkdownDesc" xml:space="preserve"><value>Recursively convert linked Markdown files</value></data>
   <data name="CliEncodingDesc" xml:space="preserve"><value>Input encoding (default: auto)</value></data>
   <data name="CliOverwriteDesc" xml:space="preserve"><value>Overwrite existing output</value></data>
   <data name="CliWarningPrefix" xml:space="preserve"><value>Warning: {0}</value></data>
   <data name="CliErrorPrefix" xml:space="preserve"><value>Error: {0}</value></data>
   <data name="InputMissing" xml:space="preserve"><value>Input file not found: {0}</value></data>
   <data name="InvalidMarkdown" xml:space="preserve"><value>Not a Markdown file: {0}</value></data>
-  <data name="DuplicateOutput" xml:space="preserve"><value>Multiple inputs target the same output: {0}</value></data>
   <data name="OutputExists" xml:space="preserve"><value>Output file already exists: {0}</value></data>
-  <data name="LinkFinalizeFailed" xml:space="preserve"><value>Could not finalize HTML links: {0}</value></data>
+  <data name="LinkFinalizeFailed" xml:space="preserve"><value>Could not finalize links: {0}</value></data>
   <data name="LinkTargetFailed" xml:space="preserve"><value>The linked Markdown could not be converted; kept the original link: {0}</value></data>
+  <data name="LinkedMarkdownMissing" xml:space="preserve"><value>The linked Markdown was not found; kept the original link: {0}</value></data>
   <data name="RelativeLinksTitle" xml:space="preserve"><value>Check relative links</value></data>
-  <data name="RelativeLinksPrompt" xml:space="preserve"><value>Changing the output folder may change where {1} relative links in {0} files point. Linked files will not be copied, and links will not be rewritten.&#10;&#10;Examples:&#10;{2}{3}&#10;&#10;Continue converting?</value></data>
+  <data name="RelativeLinksPrompt" xml:space="preserve"><value>Changing the output folder may change where {1} relative links in {0} files point. The affected linked files will not be copied, and those links will not be rewritten.&#10;&#10;Examples:&#10;{2}{3}&#10;&#10;Continue converting?</value></data>
   <data name="RelativeLinksMore" xml:space="preserve"><value>&#10;{0} more</value></data>
   <data name="RelativeLinksWarning" xml:space="preserve"><value>Changing the output folder may change where {0} relative links point. Check their targets.</value></data>
   <data name="RelativeLinksContinue" xml:space="preserve"><value>Convert anyway</value></data>
