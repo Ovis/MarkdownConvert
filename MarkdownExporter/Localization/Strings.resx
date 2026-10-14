@@ -63,6 +63,7 @@
   <data name="FilterMarkdown" xml:space="preserve"><value>Markdownファイル (*.md;*.markdown)|*.md;*.markdown</value></data>
   <data name="OnlyMarkdown" xml:space="preserve"><value>Markdownファイルのみ追加できます: {0}</value></data>
   <data name="Converting" xml:space="preserve"><value>変換中…</value></data>
+  <data name="CheckingRelativeLinks" xml:space="preserve"><value>相対リンクを確認中…</value></data>
   <data name="Waiting" xml:space="preserve"><value>待機</value></data>
   <data name="Processing" xml:space="preserve"><value>処理中</value></data>
   <data name="Success" xml:space="preserve"><value>成功</value></data>
@@ -97,6 +98,12 @@
   <data name="OutputExists" xml:space="preserve"><value>出力ファイルが既にあります: {0}</value></data>
   <data name="LinkFinalizeFailed" xml:space="preserve"><value>HTMLリンクの確定に失敗しました: {0}</value></data>
   <data name="LinkTargetFailed" xml:space="preserve"><value>リンク先のHTML化が失敗したため元のリンクを維持しました: {0}</value></data>
+  <data name="RelativeLinksTitle" xml:space="preserve"><value>相対リンクの確認</value></data>
+  <data name="RelativeLinksPrompt" xml:space="preserve"><value>出力先の変更により、{0}件のファイルにある相対リンク{1}件の参照先が変わる可能性があります。リンク先のファイルはコピーせず、リンクも書き換えません。&#10;&#10;例:&#10;{2}{3}&#10;&#10;このまま変換しますか？</value></data>
+  <data name="RelativeLinksMore" xml:space="preserve"><value>&#10;ほか{0}件</value></data>
+  <data name="RelativeLinksWarning" xml:space="preserve"><value>出力先を変更したため、相対リンク{0}件の参照先が変わる可能性があります。リンク先を確認してください。</value></data>
+  <data name="RelativeLinksContinue" xml:space="preserve"><value>そのまま変換</value></data>
+  <data name="RelativeLinksBack" xml:space="preserve"><value>戻る</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>対応していない画像形式です: {0}</value></data>
   <data name="ImageMissing" xml:space="preserve"><value>画像が見つかりません: {0}</value></data>
   <data name="TemplateAssetsOnly" xml:space="preserve"><value>テンプレート素材は assets/ 内に置いてください: {0}</value></data>

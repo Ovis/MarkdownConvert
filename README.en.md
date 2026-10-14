@@ -16,6 +16,8 @@ Run `mdexport.exe` to open the graphical interface. Drop Markdown files onto the
 
 For output, choose "Beside each source file" (the default) or "Specified folder" in the GUI. The first choice writes beside each Markdown file; the second writes to a shared folder. You can save the same choice in Default Settings.
 
+When output goes to a specified folder, local relative links may resolve to different files. If affected links are found, the GUI asks for confirmation before conversion and keeps a warning on each affected file's result. Linked files are not copied, and those links are not rewritten. Links to Markdown files converted to HTML in the same run are updated to point to the generated HTML.
+
 If WebView2 Runtime is missing, the graphical interface offers to open Microsoft's download page. The CLI exits with an error containing the URL. The ZIP does not bundle the Runtime. The installer uses Microsoft's Bootstrapper to install it when needed and requires an internet connection for that step.
 
 The installer selects “Add MarkdownExporter to the user PATH” by default. This lets you run `mdexport.exe` by name from a newly opened terminal. Clear the checkbox if you do not want it. For a silent installation, pass `/MERGETASKS="!addtopath"` to disable it. Uninstall removes only the path entry added by the installer. The ZIP does not change PATH.
@@ -54,6 +56,8 @@ Examples from the distribution folder in PowerShell:
 ```
 
 Without `--overwrite`, an input whose output already exists fails, while other inputs continue. If multiple inputs would produce the same output path, conversion stops before writing any output. Exit codes are `0` for success or help, `1` for conversion failure, and `2` for invalid arguments.
+
+With `--output`, the CLI converts without prompting and prints a warning to standard error if local relative links may resolve to different files. A warning alone does not change the exit code.
 
 ## Templates
 

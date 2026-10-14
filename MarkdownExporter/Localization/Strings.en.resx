@@ -63,6 +63,7 @@
   <data name="FilterMarkdown" xml:space="preserve"><value>Markdown files (*.md;*.markdown)|*.md;*.markdown</value></data>
   <data name="OnlyMarkdown" xml:space="preserve"><value>Only Markdown files can be added: {0}</value></data>
   <data name="Converting" xml:space="preserve"><value>Converting…</value></data>
+  <data name="CheckingRelativeLinks" xml:space="preserve"><value>Checking relative links…</value></data>
   <data name="Waiting" xml:space="preserve"><value>Waiting</value></data>
   <data name="Processing" xml:space="preserve"><value>Working</value></data>
   <data name="Success" xml:space="preserve"><value>Success</value></data>
@@ -97,6 +98,12 @@
   <data name="OutputExists" xml:space="preserve"><value>Output file already exists: {0}</value></data>
   <data name="LinkFinalizeFailed" xml:space="preserve"><value>Could not finalize HTML links: {0}</value></data>
   <data name="LinkTargetFailed" xml:space="preserve"><value>The linked Markdown could not be converted; kept the original link: {0}</value></data>
+  <data name="RelativeLinksTitle" xml:space="preserve"><value>Check relative links</value></data>
+  <data name="RelativeLinksPrompt" xml:space="preserve"><value>Changing the output folder may change where {1} relative links in {0} files point. Linked files will not be copied, and links will not be rewritten.&#10;&#10;Examples:&#10;{2}{3}&#10;&#10;Continue converting?</value></data>
+  <data name="RelativeLinksMore" xml:space="preserve"><value>&#10;{0} more</value></data>
+  <data name="RelativeLinksWarning" xml:space="preserve"><value>Changing the output folder may change where {0} relative links point. Check their targets.</value></data>
+  <data name="RelativeLinksContinue" xml:space="preserve"><value>Convert anyway</value></data>
+  <data name="RelativeLinksBack" xml:space="preserve"><value>Go back</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>Unsupported image format: {0}</value></data>
   <data name="ImageMissing" xml:space="preserve"><value>Image not found: {0}</value></data>
   <data name="TemplateAssetsOnly" xml:space="preserve"><value>Place template assets under assets/: {0}</value></data>

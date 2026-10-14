@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.RegularExpressions;
+using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using Ganss.Xss;
 using Markdig;
@@ -18,12 +19,7 @@ public sealed class MarkdownDocumentBuilder
         ConversionOptions options, TemplateDocument template, AssetWriter assets,
         IReadOnlyDictionary<string, string> htmlTargets)
     {
-        markdown = Regex.Replace(markdown, @"(?m)^\s*<!--\s*pagebreak\s*-->\s*$", "<div class=\"pagebreak\"></div>", RegexOptions.IgnoreCase);
-        var raw = Markdig.Markdown.ToHtml(markdown, Pipeline);
-        var sanitizer = CreateSanitizer();
-        var safe = sanitizer.Sanitize(raw);
-        var parser = new HtmlParser();
-        var document = parser.ParseDocument("<body>" + safe + "</body>");
+        var document = ParseMarkdown(markdown);
         var sourceDirectory = Path.GetDirectoryName(inputPath)!;
         // Validate every local image before creating any output assets.
         foreach (var image in document.QuerySelectorAll("img[src]"))
@@ -109,6 +105,16 @@ public sealed class MarkdownDocumentBuilder
             .Replace("{{style}}", css, StringComparison.Ordinal)
             .Replace("{{title}}", WebUtility.HtmlEncode(title), StringComparison.Ordinal);
         return htmlDocument;
+    }
+
+    internal static IHtmlDocument ParseMarkdown(string markdown)
+    {
+        markdown = Regex.Replace(markdown, @"(?m)^\s*<!--\s*pagebreak\s*-->\s*$", "<div class=\"pagebreak\"></div>", RegexOptions.IgnoreCase);
+        var raw = Markdig.Markdown.ToHtml(markdown, Pipeline);
+        var sanitizer = CreateSanitizer();
+        var safe = sanitizer.Sanitize(raw);
+        var parser = new HtmlParser();
+        return parser.ParseDocument("<body>" + safe + "</body>");
     }
 
     private static HtmlSanitizer CreateSanitizer()

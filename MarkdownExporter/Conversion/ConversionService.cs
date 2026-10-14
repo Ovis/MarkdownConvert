@@ -70,6 +70,7 @@ public sealed class ConversionService
             var folder = options.OutputDirectory is null ? Path.GetDirectoryName(Path.GetFullPath(x.Path))! : Path.GetFullPath(options.OutputDirectory);
             return Path.Combine(folder, Path.GetFileNameWithoutExtension(x.Path) + ".html");
         }, StringComparer.OrdinalIgnoreCase);
+        var convertedMarkdown = htmlTargets.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
         var pending = new List<PendingDocument>();
         using var renderer = new WebViewRenderer();
         try
@@ -92,6 +93,7 @@ public sealed class ConversionService
                         throw new IOException(LanguageManager.Format("OutputExists", htmlWanted && File.Exists(entry.HtmlPath) ? entry.HtmlPath : entry.PdfPath));
                     Directory.CreateDirectory(outputDir);
                     var markdown = EncodingReader.Read(path, input.Encoding);
+                    entry.RelativeLinkCount = RelativeLinkAnalyzer.Find(path, markdown, outputDir, convertedMarkdown).Count;
                     entry.Assets = new AssetWriter(outputDir, stem);
                     var html = builder.Build(path, markdown, outputDir, stem, options, template, entry.Assets, htmlTargets);
                     File.WriteAllText(entry.StagePath, html, new UTF8Encoding(false));
@@ -148,6 +150,9 @@ public sealed class ConversionService
                     entry.Assets?.CleanCreated();
             }
         }
+
+        foreach (var entry in pending.Where(x => (x.HtmlSuccess || x.PdfSuccess) && x.RelativeLinkCount > 0))
+            entry.Warnings.Add(LanguageManager.Format("RelativeLinksWarning", entry.RelativeLinkCount));
 
         var results = pending.Select(x => new ConversionResult(x.Path, x.HtmlSuccess, x.PdfSuccess, x.Error, x.Warnings)).ToArray();
         foreach (var result in results)
@@ -206,6 +211,10 @@ public sealed class ConversionService
             get; set;
         }
         public bool PdfSuccess
+        {
+            get; set;
+        }
+        public int RelativeLinkCount
         {
             get; set;
         }

@@ -260,6 +260,8 @@ public partial class MainWindow : Window
 
     private async void Convert_Click(object sender, RoutedEventArgs e)
     {
+        if (isConverting)
+            return;
         if (Files.Count == 0)
         {
             Status.Text = LanguageManager.Text("PromptAddFiles");
@@ -297,16 +299,34 @@ public partial class MainWindow : Window
         isConverting = true;
         FileActions.IsEnabled = false;
         ConvertButton.IsEnabled = false;
-        Status.Text = LanguageManager.Text("Converting");
-        foreach (var row in Files)
-        {
-            row.HtmlStatus = options.Format == ExportFormat.Pdf ? "NotApplicable" : "Waiting";
-            row.PdfStatus = options.Format == ExportFormat.Html ? "NotApplicable" : "Waiting";
-            row.State = "Processing";
-            row.Detail = "";
-        }
         try
         {
+            Status.Text = LanguageManager.Text("CheckingRelativeLinks");
+            var risks = await Task.Run(() => RelativeLinkAnalyzer.Scan(inputs, options));
+            if (risks.Count > 0)
+            {
+                var total = risks.Sum(x => x.Links.Count);
+                var examples = string.Join(Environment.NewLine, risks.SelectMany(x =>
+                    x.Links.Select(link => $"{Path.GetFileName(x.Path)}: {link}")).Take(3));
+                var remaining = total > 3 ? LanguageManager.Format("RelativeLinksMore", total - 3) : "";
+                var message = LanguageManager.Format("RelativeLinksPrompt", risks.Count, total, examples, remaining);
+                if (!AppDialog.Confirm(this, message, LanguageManager.Text("RelativeLinksTitle"),
+                    AppDialogKind.Warning, LanguageManager.Text("RelativeLinksContinue"),
+                    LanguageManager.Text("RelativeLinksBack")))
+                {
+                    Status.Text = LanguageManager.Text("PromptCheckSettings");
+                    return;
+                }
+            }
+
+            Status.Text = LanguageManager.Text("Converting");
+            foreach (var row in Files)
+            {
+                row.HtmlStatus = options.Format == ExportFormat.Pdf ? "NotApplicable" : "Waiting";
+                row.PdfStatus = options.Format == ExportFormat.Html ? "NotApplicable" : "Waiting";
+                row.State = "Processing";
+                row.Detail = "";
+            }
             var results = await new ConversionService().ConvertAsync(inputs, options,
                 result =>
                 {
