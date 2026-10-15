@@ -101,8 +101,8 @@
   <data name="LinkTargetFailed" xml:space="preserve"><value>リンク先の変換が失敗したため元のリンクを維持しました: {0}</value></data>
   <data name="LinkedMarkdownMissing" xml:space="preserve"><value>リンク先のMarkdownが見つからないため元のリンクを維持しました: {0}</value></data>
   <data name="RelativeLinksTitle" xml:space="preserve"><value>相対リンクの確認</value></data>
-  <data name="RelativeLinksPromptListed" xml:space="preserve"><value>出力先を元ファイルと別のフォルダーにするため、変換対象外の相対リンクが{1}件（{0}ファイル）あり、参照先が変わる可能性があります。&#10;&#10;一覧に追加したMarkdownのみ変換します。一覧にあるMarkdownへのリンクは、変換に成功した場合にHTMLではHTML、PDFではPDFへ書き換えます。それ以外のリンクは元のまま残し、リンク先のファイルはコピーしません。&#10;&#10;このまま変換しますか？</value></data>
-  <data name="RelativeLinksPromptFollow" xml:space="preserve"><value>出力先を元ファイルと別のフォルダーにするため、変換対象外の相対リンクが{1}件（{0}ファイル）あり、参照先が変わる可能性があります。&#10;&#10;リンク先のMarkdownも再帰的に変換します。変換に成功したリンクは、HTMLではHTML、PDFではPDFへ書き換えます。今回の警告対象のリンクは変換対象外のため元のまま残し、リンク先のファイルはコピーしません。&#10;&#10;このまま変換しますか？</value></data>
+  <data name="RelativeLinksPromptListed" xml:space="preserve"><value>出力先を元ファイルと別のフォルダにしています。&#10;変換対象外の相対リンクが{1}件（{0}ファイル）あり、参照先が変わる可能性があります。&#10;&#10;一覧に追加したMarkdownのみ変換する設定です。&#10;一覧にあるMarkdownへのリンクは、変換に成功した場合にHTML出力ではHTML、PDF変換ではPDFへ書き換えます。&#10;それ以外のリンクは元のまま残し、リンク先のファイルは出力先にコピーしません。&#10;&#10;このまま変換しますか？</value></data>
+  <data name="RelativeLinksPromptFollow" xml:space="preserve"><value>出力先を元ファイルと別のフォルダにしています。&#10;変換対象外の相対リンクが{1}件（{0}ファイル）あり、参照先が変わる可能性があります。&#10;&#10;リンク先のMarkdownファイルも再帰的に変換します。&#10;変換に成功したリンクは、HTML出力ではHTML、PDF変換ではPDFへ書き換えます。&#10;今回の警告対象のリンクは変換対象外のため元のまま残し、リンク先のファイルは出力先にコピーしません。&#10;&#10;このまま変換しますか？</value></data>
   <data name="RelativeLinksWarning" xml:space="preserve"><value>出力先が元ファイルと異なるため、変換対象外の相対リンク{0}件は元の記述のままです。リンク先のファイルはコピーしていません。出力先で参照先を確認してください。</value></data>
   <data name="WarningDetailsTitle" xml:space="preserve"><value>警告の詳細</value></data>
   <data name="WarningDetailsTooltip" xml:space="preserve"><value>クリックして警告内容を表示</value></data>
