@@ -27,6 +27,10 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      - name: Get qpdf
+        shell: pwsh
+        run: ./tools/prepare-qpdf.ps1 -DestinationDir ./artifacts/qpdf
+
       - name: Restore
         run: dotnet restore MarkdownExporter.slnx -m:1
 
@@ -37,6 +41,8 @@ jobs:
         run: dotnet build MarkdownExporter.slnx --configuration Release --no-restore -m:1
 
       - name: Test
+        env:
+          MDEXPORT_TEST_QPDF: ${{ github.workspace }}\artifacts\qpdf\qpdf.exe
         run: dotnet test MarkdownExporter.Tests/MarkdownExporter.Tests.csproj --configuration Release --no-build --no-restore -m:1
 
       - name: Publish

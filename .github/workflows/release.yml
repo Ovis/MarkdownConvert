@@ -33,6 +33,10 @@ jobs:
           }
           "APP_VERSION=$($env:RELEASE_TAG.Substring(1))" >> $env:GITHUB_ENV
 
+      - name: Get qpdf
+        shell: pwsh
+        run: ./tools/prepare-qpdf.ps1 -DestinationDir ./artifacts/qpdf
+
       - name: Restore
         shell: cmd
         run: dotnet restore MarkdownExporter.slnx -m:1
@@ -47,6 +51,8 @@ jobs:
 
       - name: Test
         shell: cmd
+        env:
+          MDEXPORT_TEST_QPDF: ${{ github.workspace }}\artifacts\qpdf\qpdf.exe
         run: dotnet test MarkdownExporter.Tests/MarkdownExporter.Tests.csproj --configuration Release --no-build --no-restore -m:1
 
       - name: Publish

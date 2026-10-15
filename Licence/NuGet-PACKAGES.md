@@ -1,6 +1,6 @@
 # NuGet packages
 
-Resolved versions from `MarkdownExporter/obj/project.assets.json` and `MarkdownExporter.Tests/obj/project.assets.json` on 2026-10-13. License IDs and package-file licenses come from the installed NuGet package metadata. `App` includes packages used by the distributed application; `Build` is an SDK auto-reference used during publishing; `Test` is used only by the test project. Direct and transitive packages are both listed. Recheck this inventory after a restore that changes package versions.
+Resolved versions from `MarkdownExporter/obj/project.assets.json` and `MarkdownExporter.Tests/obj/project.assets.json` on 2026-10-16. License IDs and package-file licenses come from the installed NuGet package metadata. `App` includes packages used by the distributed application; `Build` is an SDK auto-reference used during publishing; `Test` is used only by the test project. Direct and transitive packages are both listed. Recheck this inventory after a restore that changes package versions.
 
 | Package | Version | Scope | License | License text / source |
 | --- | --- | --- | --- | --- |
@@ -14,7 +14,6 @@ Resolved versions from `MarkdownExporter/obj/project.assets.json` and `MarkdownE
 | [Microsoft.Extensions.DependencyInjection.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2) | 8.0.2 | App, transitive | MIT | [MIT terms and notices](NuGet/MIT-NOTICES.txt) |
 | [Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions/8.0.3) | 8.0.3 | App, transitive | MIT | [MIT terms and notices](NuGet/MIT-NOTICES.txt) |
 | [Microsoft.Web.WebView2](https://www.nuget.org/packages/Microsoft.Web.WebView2/1.0.4258.31) | 1.0.4258.31 | App, direct | Package license file | [Package LICENSE.txt](NuGet/Microsoft.Web.WebView2-LICENSE.txt) |
-| [PDFsharp](https://www.nuget.org/packages/PDFsharp/6.2.4) | 6.2.4 | App, direct | MIT | [PDFsharp license](PDFsharp-LICENSE.txt) |
 | [UTF.Unknown](https://www.nuget.org/packages/UTF.Unknown/2.7.0) | 2.7.0 | App, direct | MPL-1.1 | [Upstream MPL-1.1 text](NuGet/UTF.Unknown-LICENSE.txt) and [source](https://github.com/CharsetDetector/UTF-unknown) |
 | [Microsoft.NET.ILLink.Tasks](https://www.nuget.org/packages/Microsoft.NET.ILLink.Tasks/10.0.12) | 10.0.12 | Build, SDK auto-reference | MIT | [Package metadata](https://www.nuget.org/packages/Microsoft.NET.ILLink.Tasks/10.0.12) |
 | [Microsoft.ApplicationInsights](https://www.nuget.org/packages/Microsoft.ApplicationInsights/2.23.0) | 2.23.0 | Test, transitive | MIT | [Package metadata](https://www.nuget.org/packages/Microsoft.ApplicationInsights/2.23.0) |
