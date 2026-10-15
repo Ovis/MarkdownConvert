@@ -71,7 +71,28 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="HTML" Binding="{Binding HtmlStatus}" IsReadOnly="True" Width="60" ElementStyle="{StaticResource UiStyle.TableStatusText}"/>
                             <DataGridTextColumn Header="PDF" Binding="{Binding PdfStatus}" IsReadOnly="True" Width="60" ElementStyle="{StaticResource UiStyle.TableStatusText}"/>
-                            <DataGridTextColumn Header="{loc:Tr State}" Binding="{Binding State}" IsReadOnly="True" Width="80" ElementStyle="{StaticResource UiStyle.TableStatusText}"/>
+                            <DataGridTemplateColumn Header="{loc:Tr State}" IsReadOnly="True" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock x:Name="StateText" Text="{Binding State}"
+                                                       Style="{StaticResource UiStyle.TableStatusText}" />
+                                            <Button x:Name="WarningDetailsButton" Visibility="Collapsed"
+                                                    Style="{StaticResource UiStyle.TableWarningButton}"
+                                                    ToolTip="{loc:Tr WarningDetailsTooltip}"
+                                                    Click="WarningDetails_Click">
+                                                <TextBlock Text="{Binding State}" TextDecorations="Underline" />
+                                            </Button>
+                                        </Grid>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsWarning}" Value="True">
+                                                <Setter TargetName="StateText" Property="Visibility" Value="Collapsed" />
+                                                <Setter TargetName="WarningDetailsButton" Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <TextBlock Text="{loc:Tr DropMarkdown}" HorizontalAlignment="Center" VerticalAlignment="Center"

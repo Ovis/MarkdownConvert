@@ -92,7 +92,7 @@
   <data name="CliFollowMarkdownDesc" xml:space="preserve"><value>Recursively convert linked Markdown files</value></data>
   <data name="CliEncodingDesc" xml:space="preserve"><value>Input encoding (default: auto)</value></data>
   <data name="CliOverwriteDesc" xml:space="preserve"><value>Overwrite existing output</value></data>
-  <data name="CliWarningPrefix" xml:space="preserve"><value>Warning: {0}</value></data>
+  <data name="CliWarningPrefix" xml:space="preserve"><value>{0}: Warning: {1}</value></data>
   <data name="CliErrorPrefix" xml:space="preserve"><value>Error: {0}</value></data>
   <data name="InputMissing" xml:space="preserve"><value>Input file not found: {0}</value></data>
   <data name="InvalidMarkdown" xml:space="preserve"><value>Not a Markdown file: {0}</value></data>
@@ -101,9 +101,11 @@
   <data name="LinkTargetFailed" xml:space="preserve"><value>The linked Markdown could not be converted; kept the original link: {0}</value></data>
   <data name="LinkedMarkdownMissing" xml:space="preserve"><value>The linked Markdown was not found; kept the original link: {0}</value></data>
   <data name="RelativeLinksTitle" xml:space="preserve"><value>Check relative links</value></data>
-  <data name="RelativeLinksPrompt" xml:space="preserve"><value>Changing the output folder may change where {1} relative links in {0} files point. The affected linked files will not be copied, and those links will not be rewritten.&#10;&#10;Examples:&#10;{2}{3}&#10;&#10;Continue converting?</value></data>
+  <data name="RelativeLinksPrompt" xml:space="preserve"><value>When the output folder differs from the source folder, relative links to files outside this conversion may point to the wrong place. This run found {1} such links in {0} files.&#10;&#10;Linked files are not copied, and links outside the conversion set are not rewritten. Links to Markdown files in this conversion are rewritten to the generated HTML or PDF only if conversion succeeds.&#10;&#10;Examples:&#10;{2}{3}&#10;&#10;Continue converting?</value></data>
   <data name="RelativeLinksMore" xml:space="preserve"><value>&#10;{0} more</value></data>
-  <data name="RelativeLinksWarning" xml:space="preserve"><value>Changing the output folder may change where {0} relative links point. Check their targets.</value></data>
+  <data name="RelativeLinksWarning" xml:space="preserve"><value>The output folder differs from the source folder. {0} relative links outside this conversion retain their original paths; their target files were not copied. Check where they point in the output.</value></data>
+  <data name="WarningDetailsTitle" xml:space="preserve"><value>Warning details</value></data>
+  <data name="WarningDetailsTooltip" xml:space="preserve"><value>Click to view warning details</value></data>
   <data name="RelativeLinksContinue" xml:space="preserve"><value>Convert anyway</value></data>
   <data name="RelativeLinksBack" xml:space="preserve"><value>Go back</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>Unsupported image format: {0}</value></data>

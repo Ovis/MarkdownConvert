@@ -87,7 +87,7 @@ public partial class App : Application
             {
                 Console.WriteLine($"{result.Path}: HTML={Status(result.HtmlSuccess)} PDF={Status(result.PdfSuccess)}");
                 foreach (var warning in result.Warnings)
-                    Console.Error.WriteLine(LanguageManager.Format("CliWarningPrefix", warning));
+                    Console.Error.WriteLine(LanguageManager.Format("CliWarningPrefix", result.Path, warning));
                 if (result.Error is not null)
                     Console.Error.WriteLine(LanguageManager.Format("CliErrorPrefix", result.Error));
             });

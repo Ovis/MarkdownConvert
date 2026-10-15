@@ -317,7 +317,7 @@ public partial class MainWindow : Window
                 var message = LanguageManager.Format("RelativeLinksPrompt", risks.Count, total, examples, remaining);
                 if (!AppDialog.Confirm(this, message, LanguageManager.Text("RelativeLinksTitle"),
                     AppDialogKind.Warning, LanguageManager.Text("RelativeLinksContinue"),
-                    LanguageManager.Text("RelativeLinksBack")))
+                    LanguageManager.Text("RelativeLinksBack"), showToneMark: false))
                 {
                     Status.Text = LanguageManager.Text("PromptCheckSettings");
                     return;
@@ -371,6 +371,14 @@ public partial class MainWindow : Window
         Files.Add(row);
         UpdateFileCount();
         return row;
+    }
+
+    private void WarningDetails_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button { DataContext: FileRow { IsWarning: true } row })
+            return;
+        AppDialog.ShowMessage(this, $"{row.Name}{Environment.NewLine}{Environment.NewLine}{row.Detail}",
+            LanguageManager.Text("WarningDetailsTitle"), AppDialogKind.Warning);
     }
 }
 
@@ -440,8 +448,9 @@ public sealed class FileRow : INotifyPropertyChanged
     public string State
     {
         get => LanguageManager.Text(stateKey);
-        set { stateKey = value; Notify(); }
+        set { stateKey = value; Notify(); Notify(nameof(IsWarning)); }
     }
+    public bool IsWarning => stateKey == "Warning";
     public string Detail
     {
         get => detail;

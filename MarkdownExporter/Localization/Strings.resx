@@ -92,7 +92,7 @@
   <data name="CliFollowMarkdownDesc" xml:space="preserve"><value>リンク先のMarkdownも再帰的に変換</value></data>
   <data name="CliEncodingDesc" xml:space="preserve"><value>入力文字コード（既定: auto）</value></data>
   <data name="CliOverwriteDesc" xml:space="preserve"><value>既存の出力を上書き</value></data>
-  <data name="CliWarningPrefix" xml:space="preserve"><value>警告: {0}</value></data>
+  <data name="CliWarningPrefix" xml:space="preserve"><value>{0}: 警告: {1}</value></data>
   <data name="CliErrorPrefix" xml:space="preserve"><value>エラー: {0}</value></data>
   <data name="InputMissing" xml:space="preserve"><value>入力ファイルがありません: {0}</value></data>
   <data name="InvalidMarkdown" xml:space="preserve"><value>Markdownファイルではありません: {0}</value></data>
@@ -101,9 +101,11 @@
   <data name="LinkTargetFailed" xml:space="preserve"><value>リンク先の変換が失敗したため元のリンクを維持しました: {0}</value></data>
   <data name="LinkedMarkdownMissing" xml:space="preserve"><value>リンク先のMarkdownが見つからないため元のリンクを維持しました: {0}</value></data>
   <data name="RelativeLinksTitle" xml:space="preserve"><value>相対リンクの確認</value></data>
-  <data name="RelativeLinksPrompt" xml:space="preserve"><value>出力先の変更により、{0}件のファイルにある相対リンク{1}件の参照先が変わる可能性があります。該当するリンク先のファイルはコピーせず、リンクも書き換えません。&#10;&#10;例:&#10;{2}{3}&#10;&#10;このまま変換しますか？</value></data>
+  <data name="RelativeLinksPrompt" xml:space="preserve"><value>出力先を元ファイルと別のフォルダーにすると、変換対象外のファイルを指す相対リンクの参照先がずれる可能性があります。今回は{0}件のファイルで{1}件見つかりました。&#10;&#10;リンク先のファイルはコピーせず、変換対象外のリンクは書き換えません。Markdownへのリンクは、そのファイルも今回の変換対象であり、変換が成功した場合に限り、HTMLではHTML、PDFではPDFへ書き換えます。&#10;&#10;対象例:&#10;{2}{3}&#10;&#10;このまま変換しますか？</value></data>
   <data name="RelativeLinksMore" xml:space="preserve"><value>&#10;ほか{0}件</value></data>
-  <data name="RelativeLinksWarning" xml:space="preserve"><value>出力先を変更したため、相対リンク{0}件の参照先が変わる可能性があります。リンク先を確認してください。</value></data>
+  <data name="RelativeLinksWarning" xml:space="preserve"><value>出力先が元ファイルと異なるため、変換対象外の相対リンク{0}件は元の記述のままです。リンク先のファイルはコピーしていません。出力先で参照先を確認してください。</value></data>
+  <data name="WarningDetailsTitle" xml:space="preserve"><value>警告の詳細</value></data>
+  <data name="WarningDetailsTooltip" xml:space="preserve"><value>クリックして警告内容を表示</value></data>
   <data name="RelativeLinksContinue" xml:space="preserve"><value>そのまま変換</value></data>
   <data name="RelativeLinksBack" xml:space="preserve"><value>戻る</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>対応していない画像形式です: {0}</value></data>
