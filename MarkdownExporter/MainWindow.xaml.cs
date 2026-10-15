@@ -311,10 +311,9 @@ public partial class MainWindow : Window
             if (risks.Count > 0)
             {
                 var total = risks.Sum(x => x.Links.Count);
-                var examples = string.Join(Environment.NewLine, risks.SelectMany(x =>
-                    x.Links.Select(link => $"{Path.GetFileName(x.Path)}: {link}")).Take(3));
-                var remaining = total > 3 ? LanguageManager.Format("RelativeLinksMore", total - 3) : "";
-                var message = LanguageManager.Format("RelativeLinksPrompt", risks.Count, total, examples, remaining);
+                var promptKey = options.FollowMarkdownLinks
+                    ? "RelativeLinksPromptFollow" : "RelativeLinksPromptListed";
+                var message = LanguageManager.Format(promptKey, risks.Count, total);
                 if (!AppDialog.Confirm(this, message, LanguageManager.Text("RelativeLinksTitle"),
                     AppDialogKind.Warning, LanguageManager.Text("RelativeLinksContinue"),
                     LanguageManager.Text("RelativeLinksCancel"), showToneMark: false, primaryFirst: true))
