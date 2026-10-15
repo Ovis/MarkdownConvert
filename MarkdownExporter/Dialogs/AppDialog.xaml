@@ -32,7 +32,7 @@
                 </ScrollViewer>
             </Grid>
         </Border>
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel x:Name="ButtonPanel" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="SecondaryButton" MinWidth="88" Margin="0,0,8,0"
                     IsCancel="True" Click="SecondaryButton_Click" />
             <Button x:Name="PrimaryButton" MinWidth="88"

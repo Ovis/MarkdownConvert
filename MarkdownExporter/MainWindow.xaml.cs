@@ -317,7 +317,7 @@ public partial class MainWindow : Window
                 var message = LanguageManager.Format("RelativeLinksPrompt", risks.Count, total, examples, remaining);
                 if (!AppDialog.Confirm(this, message, LanguageManager.Text("RelativeLinksTitle"),
                     AppDialogKind.Warning, LanguageManager.Text("RelativeLinksContinue"),
-                    LanguageManager.Text("RelativeLinksBack"), showToneMark: false))
+                    LanguageManager.Text("RelativeLinksCancel"), showToneMark: false, primaryFirst: true))
                 {
                     Status.Text = LanguageManager.Text("PromptCheckSettings");
                     return;

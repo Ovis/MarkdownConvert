@@ -14,7 +14,8 @@ public enum AppDialogKind
 public partial class AppDialog : Window
 {
     private AppDialog(string message, string heading, bool confirm, AppDialogKind kind,
-        string? primaryLabel = null, string? secondaryLabel = null, bool showToneMark = true)
+        string? primaryLabel = null, string? secondaryLabel = null, bool showToneMark = true,
+        bool primaryFirst = false)
     {
         InitializeComponent();
         Heading.Text = heading;
@@ -22,6 +23,13 @@ public partial class AppDialog : Window
         SecondaryButton.Visibility = confirm ? Visibility.Visible : Visibility.Collapsed;
         SecondaryButton.Content = secondaryLabel ?? LanguageManager.Text("DialogNo");
         PrimaryButton.Content = primaryLabel ?? LanguageManager.Text(confirm ? "DialogYes" : "DialogOk");
+        if (confirm && primaryFirst)
+        {
+            ButtonPanel.Children.Remove(PrimaryButton);
+            ButtonPanel.Children.Insert(0, PrimaryButton);
+            PrimaryButton.Margin = new Thickness(0, 0, 8, 0);
+            SecondaryButton.Margin = new Thickness(0);
+        }
         ToneMark.Visibility = showToneMark ? Visibility.Visible : Visibility.Collapsed;
         ToneMark.SetResourceReference(Border.BackgroundProperty, kind switch
         {
@@ -33,8 +41,9 @@ public partial class AppDialog : Window
 
     public static bool Confirm(Window owner, string message, string heading,
         AppDialogKind kind = AppDialogKind.Question, string? primaryLabel = null,
-        string? secondaryLabel = null, bool showToneMark = true) =>
-        new AppDialog(message, heading, true, kind, primaryLabel, secondaryLabel, showToneMark) { Owner = owner }.ShowDialog() == true;
+        string? secondaryLabel = null, bool showToneMark = true, bool primaryFirst = false) =>
+        new AppDialog(message, heading, true, kind, primaryLabel, secondaryLabel, showToneMark, primaryFirst)
+        { Owner = owner }.ShowDialog() == true;
 
     public static void ShowMessage(Window? owner, string message, string heading,
         AppDialogKind kind = AppDialogKind.Error)

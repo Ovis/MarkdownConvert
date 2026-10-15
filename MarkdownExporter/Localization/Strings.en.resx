@@ -107,7 +107,7 @@
   <data name="WarningDetailsTitle" xml:space="preserve"><value>Warning details</value></data>
   <data name="WarningDetailsTooltip" xml:space="preserve"><value>Click to view warning details</value></data>
   <data name="RelativeLinksContinue" xml:space="preserve"><value>Convert anyway</value></data>
-  <data name="RelativeLinksBack" xml:space="preserve"><value>Go back</value></data>
+  <data name="RelativeLinksCancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>Unsupported image format: {0}</value></data>
   <data name="ImageMissing" xml:space="preserve"><value>Image not found: {0}</value></data>
   <data name="TemplateAssetsOnly" xml:space="preserve"><value>Place template assets under assets/: {0}</value></data>

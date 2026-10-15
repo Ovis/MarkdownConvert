@@ -107,7 +107,7 @@
   <data name="WarningDetailsTitle" xml:space="preserve"><value>警告の詳細</value></data>
   <data name="WarningDetailsTooltip" xml:space="preserve"><value>クリックして警告内容を表示</value></data>
   <data name="RelativeLinksContinue" xml:space="preserve"><value>そのまま変換</value></data>
-  <data name="RelativeLinksBack" xml:space="preserve"><value>戻る</value></data>
+  <data name="RelativeLinksCancel" xml:space="preserve"><value>キャンセル</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>対応していない画像形式です: {0}</value></data>
   <data name="ImageMissing" xml:space="preserve"><value>画像が見つかりません: {0}</value></data>
   <data name="TemplateAssetsOnly" xml:space="preserve"><value>テンプレート素材は assets/ 内に置いてください: {0}</value></data>
