@@ -115,7 +115,7 @@ public sealed class PdfLinkRewriterTests
             ? "Z:\\linked.pdf" : "C:\\linked.pdf";
         await CreatePdfAsync(input, new Uri(otherDrive).AbsoluteUri);
 
-        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
             await PdfLinkRewriter.RewriteLocalPdfLinksAsync(input, output, output, QpdfPath));
         Assert.That(File.Exists(output), Is.False);
     }
