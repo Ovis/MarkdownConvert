@@ -50,7 +50,8 @@
                         <RadioButton x:Name="LandscapeRadio" Content="{loc:Tr Landscape}" GroupName="Orientation"/>
                     </StackPanel>
                     <TextBlock Text="{loc:Tr FigureDisplay}" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                    <CheckBox x:Name="FitCheck" Content="{loc:Tr FitOnePage}"/>
+                    <CheckBox x:Name="FitCheck" Content="{loc:Tr FitOnePage}" Margin="0,0,0,13"/>
+                    <CheckBox x:Name="FollowMarkdownCheck" Content="{loc:Tr FollowMarkdownLinks}"/>
                 </StackPanel>
             </ScrollViewer>
         </Border>

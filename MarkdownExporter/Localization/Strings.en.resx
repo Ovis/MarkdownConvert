@@ -34,6 +34,8 @@
   <data name="Landscape" xml:space="preserve"><value>Landscape</value></data>
   <data name="FigureDisplay" xml:space="preserve"><value>Figures</value></data>
   <data name="FitOnePage" xml:space="preserve"><value>Fit each figure on one page</value></data>
+  <data name="FollowMarkdownLinks" xml:space="preserve"><value>Convert linked Markdown files</value></data>
+  <data name="LinkedMarkdownRow" xml:space="preserve"><value>Added from a Markdown link (encoding: Auto)</value></data>
   <data name="RestoreDefaults" xml:space="preserve"><value>Restore defaults</value></data>
   <data name="Convert" xml:space="preserve"><value>Convert</value></data>
   <data name="Appearance" xml:space="preserve"><value>Appearance</value></data>
@@ -51,7 +53,6 @@
   <data name="Save" xml:space="preserve"><value>Save</value></data>
   <data name="DialogSettingsError" xml:space="preserve"><value>Settings error</value></data>
   <data name="DialogConversionError" xml:space="preserve"><value>Conversion error</value></data>
-  <data name="DialogCannotConvert" xml:space="preserve"><value>Cannot convert</value></data>
   <data name="DialogConfirmation" xml:space="preserve"><value>Confirm</value></data>
   <data name="DialogYes" xml:space="preserve"><value>Yes</value></data>
   <data name="DialogNo" xml:space="preserve"><value>No</value></data>
@@ -63,6 +64,7 @@
   <data name="FilterMarkdown" xml:space="preserve"><value>Markdown files (*.md;*.markdown)|*.md;*.markdown</value></data>
   <data name="OnlyMarkdown" xml:space="preserve"><value>Only Markdown files can be added: {0}</value></data>
   <data name="Converting" xml:space="preserve"><value>Converting…</value></data>
+  <data name="CheckingRelativeLinks" xml:space="preserve"><value>Checking relative links…</value></data>
   <data name="Waiting" xml:space="preserve"><value>Waiting</value></data>
   <data name="Processing" xml:space="preserve"><value>Working</value></data>
   <data name="Success" xml:space="preserve"><value>Success</value></data>
@@ -87,16 +89,25 @@
   <data name="CliEmbedDesc" xml:space="preserve"><value>Embed images in HTML</value></data>
   <data name="CliOrientationDesc" xml:space="preserve"><value>PDF orientation</value></data>
   <data name="CliFitDesc" xml:space="preserve"><value>Scale PDF figures to fit a page</value></data>
+  <data name="CliFollowMarkdownDesc" xml:space="preserve"><value>Recursively convert linked Markdown files</value></data>
   <data name="CliEncodingDesc" xml:space="preserve"><value>Input encoding (default: auto)</value></data>
   <data name="CliOverwriteDesc" xml:space="preserve"><value>Overwrite existing output</value></data>
-  <data name="CliWarningPrefix" xml:space="preserve"><value>Warning: {0}</value></data>
+  <data name="CliWarningPrefix" xml:space="preserve"><value>{0}: Warning: {1}</value></data>
   <data name="CliErrorPrefix" xml:space="preserve"><value>Error: {0}</value></data>
   <data name="InputMissing" xml:space="preserve"><value>Input file not found: {0}</value></data>
   <data name="InvalidMarkdown" xml:space="preserve"><value>Not a Markdown file: {0}</value></data>
-  <data name="DuplicateOutput" xml:space="preserve"><value>Multiple inputs target the same output: {0}</value></data>
   <data name="OutputExists" xml:space="preserve"><value>Output file already exists: {0}</value></data>
-  <data name="LinkFinalizeFailed" xml:space="preserve"><value>Could not finalize HTML links: {0}</value></data>
+  <data name="LinkFinalizeFailed" xml:space="preserve"><value>Could not finalize links: {0}</value></data>
   <data name="LinkTargetFailed" xml:space="preserve"><value>The linked Markdown could not be converted; kept the original link: {0}</value></data>
+  <data name="LinkedMarkdownMissing" xml:space="preserve"><value>The linked Markdown was not found; kept the original link: {0}</value></data>
+  <data name="RelativeLinksTitle" xml:space="preserve"><value>Check relative links</value></data>
+  <data name="RelativeLinksPromptListed" xml:space="preserve"><value>The output folder is different from the source folder.&#10;There are {1} relative links outside this conversion ({0} files), and their targets may change.&#10;&#10;Only Markdown files added to the list will be converted.&#10;Links to listed Markdown files are rewritten to HTML in HTML output or PDF in PDF output if conversion succeeds.&#10;Other links remain unchanged, and their target files are not copied to the output folder.&#10;&#10;Continue converting?</value></data>
+  <data name="RelativeLinksPromptFollow" xml:space="preserve"><value>The output folder is different from the source folder.&#10;There are {1} relative links outside this conversion ({0} files), and their targets may change.&#10;&#10;Linked Markdown files will also be converted recursively.&#10;Links converted successfully are rewritten to HTML in HTML output or PDF in PDF output.&#10;The links covered by this warning are outside the conversion set, so they remain unchanged and their target files are not copied to the output folder.&#10;&#10;Continue converting?</value></data>
+  <data name="RelativeLinksWarning" xml:space="preserve"><value>The output folder differs from the source folder. {0} relative links outside this conversion retain their original paths; their target files were not copied. Check where they point in the output.</value></data>
+  <data name="WarningDetailsTitle" xml:space="preserve"><value>Warning details</value></data>
+  <data name="WarningDetailsTooltip" xml:space="preserve"><value>Click to view warning details</value></data>
+  <data name="RelativeLinksContinue" xml:space="preserve"><value>Convert anyway</value></data>
+  <data name="RelativeLinksCancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>Unsupported image format: {0}</value></data>
   <data name="ImageMissing" xml:space="preserve"><value>Image not found: {0}</value></data>
   <data name="TemplateAssetsOnly" xml:space="preserve"><value>Place template assets under assets/: {0}</value></data>

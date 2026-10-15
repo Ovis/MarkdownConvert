@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:loc="clr-namespace:MarkdownExporter.Localization"
-        Title="MarkdownExporter" Icon="Assets/AppIcon.ico" Width="1120" Height="660" MinWidth="900" MinHeight="540"
+        Title="MarkdownExporter" Icon="Assets/AppIcon.ico" Width="1120" Height="720" MinWidth="900" MinHeight="540"
         WindowStartupLocation="CenterScreen" Style="{StaticResource UiStyle.Window}"
         SourceInitialized="Window_SourceInitialized">
     <Grid Margin="16">
@@ -58,6 +58,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox ItemsSource="{Binding EncodingOptions}" SelectedItem="{Binding SelectedEncodingOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  IsEnabled="{Binding CanEditEncoding}"
                                                   TextSearch.TextPath="Name" Style="{StaticResource UiStyle.TableComboBox}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -70,7 +71,28 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="HTML" Binding="{Binding HtmlStatus}" IsReadOnly="True" Width="60" ElementStyle="{StaticResource UiStyle.TableStatusText}"/>
                             <DataGridTextColumn Header="PDF" Binding="{Binding PdfStatus}" IsReadOnly="True" Width="60" ElementStyle="{StaticResource UiStyle.TableStatusText}"/>
-                            <DataGridTextColumn Header="{loc:Tr State}" Binding="{Binding State}" IsReadOnly="True" Width="80" ElementStyle="{StaticResource UiStyle.TableStatusText}"/>
+                            <DataGridTemplateColumn Header="{loc:Tr State}" IsReadOnly="True" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock x:Name="StateText" Text="{Binding State}"
+                                                       Style="{StaticResource UiStyle.TableStatusText}" />
+                                            <Button x:Name="WarningDetailsButton" Visibility="Collapsed"
+                                                    Style="{StaticResource UiStyle.TableWarningButton}"
+                                                    ToolTip="{loc:Tr WarningDetailsTooltip}"
+                                                    Click="WarningDetails_Click">
+                                                <TextBlock Text="{Binding State}" TextDecorations="Underline" />
+                                            </Button>
+                                        </Grid>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsWarning}" Value="True">
+                                                <Setter TargetName="StateText" Property="Visibility" Value="Collapsed" />
+                                                <Setter TargetName="WarningDetailsButton" Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <TextBlock Text="{loc:Tr DropMarkdown}" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -128,7 +150,8 @@
                                 <RadioButton x:Name="LandscapeRadio" Content="{loc:Tr Landscape}" GroupName="Orientation"/>
                             </StackPanel>
                             <TextBlock Text="{loc:Tr FigureDisplay}" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                            <CheckBox x:Name="FitCheck" Content="{loc:Tr FitOnePage}"/>
+                            <CheckBox x:Name="FitCheck" Content="{loc:Tr FitOnePage}" Margin="0,0,0,12"/>
+                            <CheckBox x:Name="FollowMarkdownCheck" Content="{loc:Tr FollowMarkdownLinks}"/>
                         </StackPanel>
                     </ScrollViewer>
                     <Grid Grid.Row="4">

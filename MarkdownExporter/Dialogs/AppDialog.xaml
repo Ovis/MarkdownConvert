@@ -20,12 +20,12 @@
         <Border Grid.Row="2" Style="{StaticResource UiStyle.Panel}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3" />
-                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Border x:Name="ToneMark" Background="{DynamicResource UiBrush.Accent}" CornerRadius="2" />
-                <ScrollViewer Grid.Column="2" MaxHeight="300" VerticalScrollBarVisibility="Auto"
+                <Border x:Name="ToneMark" Width="3" Margin="0,0,16,0"
+                        Background="{DynamicResource UiBrush.Accent}" CornerRadius="2" />
+                <ScrollViewer Grid.Column="1" MaxHeight="300" VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
                     <TextBlock x:Name="Message" Foreground="{DynamicResource UiBrush.Text}"
                                TextWrapping="Wrap" Padding="0,2,12,2" />
@@ -33,10 +33,10 @@
             </Grid>
         </Border>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="PrimaryButton" MinWidth="88" Margin="0,0,8,0"
+            <Button x:Name="PrimaryButton" MinWidth="88"
                     Style="{StaticResource UiStyle.PrimaryButton}"
                     IsDefault="True" Click="PrimaryButton_Click" />
-            <Button x:Name="SecondaryButton" MinWidth="88"
+            <Button x:Name="SecondaryButton" MinWidth="88" Margin="8,0,0,0"
                     IsCancel="True" Click="SecondaryButton_Click" />
         </StackPanel>
     </Grid>

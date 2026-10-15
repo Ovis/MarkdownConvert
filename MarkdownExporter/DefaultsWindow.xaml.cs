@@ -43,6 +43,7 @@ public partial class DefaultsWindow : Window
         PortraitRadio.IsChecked = defaults.Orientation == PageOrientation.Portrait;
         LandscapeRadio.IsChecked = defaults.Orientation == PageOrientation.Landscape;
         FitCheck.IsChecked = defaults.FitFiguresToPage;
+        FollowMarkdownCheck.IsChecked = defaults.FollowMarkdownLinks;
         ready = true;
     }
 
@@ -132,7 +133,8 @@ public partial class DefaultsWindow : Window
             Template = (TemplateCombo.SelectedItem as string ?? "").Trim(),
             EmbedImages = EmbedCheck.IsChecked == true,
             Orientation = LandscapeRadio.IsChecked == true ? PageOrientation.Landscape : PageOrientation.Portrait,
-            FitFiguresToPage = FitCheck.IsChecked == true
+            FitFiguresToPage = FitCheck.IsChecked == true,
+            FollowMarkdownLinks = FollowMarkdownCheck.IsChecked == true
         };
         try
         {

@@ -38,7 +38,7 @@ public sealed class SettingsStoreTests
         {
             Theme = AppThemePreference.Dark,
             Language = LanguagePreference.English,
-            Defaults = new ConversionOptions { Format = ExportFormat.Pdf, Template = "custom" }
+            Defaults = new ConversionOptions { Format = ExportFormat.Pdf, Template = "custom", FollowMarkdownLinks = true }
         };
 
         SettingsStore.Save(settings, path);
@@ -52,7 +52,22 @@ public sealed class SettingsStoreTests
             Assert.That(loaded.Language, Is.EqualTo(LanguagePreference.English));
             Assert.That(loaded.Defaults.Format, Is.EqualTo(ExportFormat.Pdf));
             Assert.That(loaded.Defaults.Template, Is.EqualTo("changed"));
+            Assert.That(loaded.Defaults.FollowMarkdownLinks, Is.True);
             Assert.That(File.Exists(path + ".tmp"), Is.False);
+        });
+    }
+
+    [Test]
+    public void ConversionDefaultsChanges_FollowLinksOnly_RequiresCurrentSettingsPrompt()
+    {
+        var changes = new ConversionDefaultsChanges(new ConversionOptions(),
+            new ConversionOptions { FollowMarkdownLinks = true });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(changes.HasChanges, Is.True);
+            Assert.That(changes.FollowMarkdownLinksChanged, Is.True);
+            Assert.That(changes.Saved.FollowMarkdownLinks, Is.True);
         });
     }
 }

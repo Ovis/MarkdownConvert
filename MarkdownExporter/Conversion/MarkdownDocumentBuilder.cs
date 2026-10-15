@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.RegularExpressions;
+using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using Ganss.Xss;
 using Markdig;
@@ -18,12 +19,7 @@ public sealed class MarkdownDocumentBuilder
         ConversionOptions options, TemplateDocument template, AssetWriter assets,
         IReadOnlyDictionary<string, string> htmlTargets)
     {
-        markdown = Regex.Replace(markdown, @"(?m)^\s*<!--\s*pagebreak\s*-->\s*$", "<div class=\"pagebreak\"></div>", RegexOptions.IgnoreCase);
-        var raw = Markdig.Markdown.ToHtml(markdown, Pipeline);
-        var sanitizer = CreateSanitizer();
-        var safe = sanitizer.Sanitize(raw);
-        var parser = new HtmlParser();
-        var document = parser.ParseDocument("<body>" + safe + "</body>");
+        var document = ParseMarkdown(markdown);
         var sourceDirectory = Path.GetDirectoryName(inputPath)!;
         // Validate every local image before creating any output assets.
         foreach (var image in document.QuerySelectorAll("img[src]"))
@@ -48,13 +44,9 @@ public sealed class MarkdownDocumentBuilder
         foreach (var anchor in document.QuerySelectorAll("a[href]"))
         {
             var url = anchor.GetAttribute("href")!;
-            if (!IsLocal(url))
+            if (!LinkedMarkdownLinks.TryResolve(sourceDirectory, url, out var local))
                 continue;
             var split = SplitUrl(url);
-            if (!split.Path.EndsWith(".md", StringComparison.OrdinalIgnoreCase) &&
-                !split.Path.EndsWith(".markdown", StringComparison.OrdinalIgnoreCase))
-                continue;
-            var local = Resolve(sourceDirectory, url);
             if (htmlTargets.TryGetValue(local, out var html))
             {
                 anchor.SetAttribute("href", RelativeUrl(outputDirectory, html) + split.Suffix);
@@ -111,6 +103,16 @@ public sealed class MarkdownDocumentBuilder
         return htmlDocument;
     }
 
+    internal static IHtmlDocument ParseMarkdown(string markdown)
+    {
+        markdown = Regex.Replace(markdown, @"(?m)^\s*<!--\s*pagebreak\s*-->\s*$", "<div class=\"pagebreak\"></div>", RegexOptions.IgnoreCase);
+        var raw = Markdig.Markdown.ToHtml(markdown, Pipeline);
+        var sanitizer = CreateSanitizer();
+        var safe = sanitizer.Sanitize(raw);
+        var parser = new HtmlParser();
+        return parser.ParseDocument("<body>" + safe + "</body>");
+    }
+
     private static HtmlSanitizer CreateSanitizer()
     {
         var s = new HtmlSanitizer();
@@ -151,7 +153,7 @@ public sealed class MarkdownDocumentBuilder
 
     private static bool IsLocal(string url) => !url.StartsWith('#') && !url.StartsWith("//") &&
         !Uri.TryCreate(url, UriKind.Absolute, out _);
-    private static (string Path, string Suffix) SplitUrl(string url)
+    internal static (string Path, string Suffix) SplitUrl(string url)
     {
         var split = url.IndexOfAny(['?', '#']);
         return split < 0 ? (url, "") : (url[..split], url[split..]);
@@ -161,7 +163,7 @@ public sealed class MarkdownDocumentBuilder
         var path = Uri.UnescapeDataString(SplitUrl(url).Path).Replace('/', Path.DirectorySeparatorChar);
         return Path.GetFullPath(Path.Combine(directory, path));
     }
-    private static string RelativeUrl(string fromDirectory, string destination)
+    internal static string RelativeUrl(string fromDirectory, string destination)
     {
         var relative = Path.GetRelativePath(fromDirectory, destination);
         return string.Join("/", relative.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)

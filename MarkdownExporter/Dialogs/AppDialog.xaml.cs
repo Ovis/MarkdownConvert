@@ -13,14 +13,16 @@ public enum AppDialogKind
 
 public partial class AppDialog : Window
 {
-    private AppDialog(string message, string heading, bool confirm, AppDialogKind kind)
+    private AppDialog(string message, string heading, bool confirm, AppDialogKind kind,
+        string? primaryLabel = null, string? secondaryLabel = null, bool showToneMark = true)
     {
         InitializeComponent();
         Heading.Text = heading;
         Message.Text = message;
         SecondaryButton.Visibility = confirm ? Visibility.Visible : Visibility.Collapsed;
-        SecondaryButton.Content = LanguageManager.Text("DialogNo");
-        PrimaryButton.Content = LanguageManager.Text(confirm ? "DialogYes" : "DialogOk");
+        SecondaryButton.Content = secondaryLabel ?? LanguageManager.Text("DialogNo");
+        PrimaryButton.Content = primaryLabel ?? LanguageManager.Text(confirm ? "DialogYes" : "DialogOk");
+        ToneMark.Visibility = showToneMark ? Visibility.Visible : Visibility.Collapsed;
         ToneMark.SetResourceReference(Border.BackgroundProperty, kind switch
         {
             AppDialogKind.Warning => "UiBrush.Warning",
@@ -30,8 +32,10 @@ public partial class AppDialog : Window
     }
 
     public static bool Confirm(Window owner, string message, string heading,
-        AppDialogKind kind = AppDialogKind.Question) =>
-        new AppDialog(message, heading, true, kind) { Owner = owner }.ShowDialog() == true;
+        AppDialogKind kind = AppDialogKind.Question, string? primaryLabel = null,
+        string? secondaryLabel = null, bool showToneMark = true) =>
+        new AppDialog(message, heading, true, kind, primaryLabel, secondaryLabel, showToneMark)
+        { Owner = owner }.ShowDialog() == true;
 
     public static void ShowMessage(Window? owner, string message, string heading,
         AppDialogKind kind = AppDialogKind.Error)

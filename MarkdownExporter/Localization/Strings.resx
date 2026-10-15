@@ -34,6 +34,8 @@
   <data name="Landscape" xml:space="preserve"><value>横</value></data>
   <data name="FigureDisplay" xml:space="preserve"><value>図の表示</value></data>
   <data name="FitOnePage" xml:space="preserve"><value>1ページに収める</value></data>
+  <data name="FollowMarkdownLinks" xml:space="preserve"><value>リンク先のMarkdownも変換</value></data>
+  <data name="LinkedMarkdownRow" xml:space="preserve"><value>Markdownリンクから追加（文字コード: 自動）</value></data>
   <data name="RestoreDefaults" xml:space="preserve"><value>既定値に戻す</value></data>
   <data name="Convert" xml:space="preserve"><value>変換する</value></data>
   <data name="Appearance" xml:space="preserve"><value>外観</value></data>
@@ -51,7 +53,6 @@
   <data name="Save" xml:space="preserve"><value>保存</value></data>
   <data name="DialogSettingsError" xml:space="preserve"><value>設定エラー</value></data>
   <data name="DialogConversionError" xml:space="preserve"><value>変換エラー</value></data>
-  <data name="DialogCannotConvert" xml:space="preserve"><value>変換できません</value></data>
   <data name="DialogConfirmation" xml:space="preserve"><value>確認</value></data>
   <data name="DialogYes" xml:space="preserve"><value>はい</value></data>
   <data name="DialogNo" xml:space="preserve"><value>いいえ</value></data>
@@ -63,6 +64,7 @@
   <data name="FilterMarkdown" xml:space="preserve"><value>Markdownファイル (*.md;*.markdown)|*.md;*.markdown</value></data>
   <data name="OnlyMarkdown" xml:space="preserve"><value>Markdownファイルのみ追加できます: {0}</value></data>
   <data name="Converting" xml:space="preserve"><value>変換中…</value></data>
+  <data name="CheckingRelativeLinks" xml:space="preserve"><value>相対リンクを確認中…</value></data>
   <data name="Waiting" xml:space="preserve"><value>待機</value></data>
   <data name="Processing" xml:space="preserve"><value>処理中</value></data>
   <data name="Success" xml:space="preserve"><value>成功</value></data>
@@ -87,16 +89,25 @@
   <data name="CliEmbedDesc" xml:space="preserve"><value>画像をHTMLへ埋め込む</value></data>
   <data name="CliOrientationDesc" xml:space="preserve"><value>PDFの向き</value></data>
   <data name="CliFitDesc" xml:space="preserve"><value>PDFの図をページへ縮小</value></data>
+  <data name="CliFollowMarkdownDesc" xml:space="preserve"><value>リンク先のMarkdownも再帰的に変換</value></data>
   <data name="CliEncodingDesc" xml:space="preserve"><value>入力文字コード（既定: auto）</value></data>
   <data name="CliOverwriteDesc" xml:space="preserve"><value>既存の出力を上書き</value></data>
-  <data name="CliWarningPrefix" xml:space="preserve"><value>警告: {0}</value></data>
+  <data name="CliWarningPrefix" xml:space="preserve"><value>{0}: 警告: {1}</value></data>
   <data name="CliErrorPrefix" xml:space="preserve"><value>エラー: {0}</value></data>
   <data name="InputMissing" xml:space="preserve"><value>入力ファイルがありません: {0}</value></data>
   <data name="InvalidMarkdown" xml:space="preserve"><value>Markdownファイルではありません: {0}</value></data>
-  <data name="DuplicateOutput" xml:space="preserve"><value>同じ出力先が重複します: {0}</value></data>
   <data name="OutputExists" xml:space="preserve"><value>出力ファイルが既にあります: {0}</value></data>
-  <data name="LinkFinalizeFailed" xml:space="preserve"><value>HTMLリンクの確定に失敗しました: {0}</value></data>
-  <data name="LinkTargetFailed" xml:space="preserve"><value>リンク先のHTML化が失敗したため元のリンクを維持しました: {0}</value></data>
+  <data name="LinkFinalizeFailed" xml:space="preserve"><value>リンクの確定に失敗しました: {0}</value></data>
+  <data name="LinkTargetFailed" xml:space="preserve"><value>リンク先の変換が失敗したため元のリンクを維持しました: {0}</value></data>
+  <data name="LinkedMarkdownMissing" xml:space="preserve"><value>リンク先のMarkdownが見つからないため元のリンクを維持しました: {0}</value></data>
+  <data name="RelativeLinksTitle" xml:space="preserve"><value>相対リンクの確認</value></data>
+  <data name="RelativeLinksPromptListed" xml:space="preserve"><value>出力先を元ファイルと別のフォルダにしています。&#10;変換対象外の相対リンクが{1}件（{0}ファイル）あり、参照先が変わる可能性があります。&#10;&#10;一覧に追加したMarkdownのみ変換する設定です。&#10;一覧にあるMarkdownへのリンクは、変換に成功した場合にHTML出力ではHTML、PDF変換ではPDFへ書き換えます。&#10;それ以外のリンクは元のまま残し、リンク先のファイルは出力先にコピーしません。&#10;&#10;このまま変換しますか？</value></data>
+  <data name="RelativeLinksPromptFollow" xml:space="preserve"><value>出力先を元ファイルと別のフォルダにしています。&#10;変換対象外の相対リンクが{1}件（{0}ファイル）あり、参照先が変わる可能性があります。&#10;&#10;リンク先のMarkdownファイルも再帰的に変換します。&#10;変換に成功したリンクは、HTML出力ではHTML、PDF変換ではPDFへ書き換えます。&#10;今回の警告対象のリンクは変換対象外のため元のまま残し、リンク先のファイルは出力先にコピーしません。&#10;&#10;このまま変換しますか？</value></data>
+  <data name="RelativeLinksWarning" xml:space="preserve"><value>出力先が元ファイルと異なるため、変換対象外の相対リンク{0}件は元の記述のままです。リンク先のファイルはコピーしていません。出力先で参照先を確認してください。</value></data>
+  <data name="WarningDetailsTitle" xml:space="preserve"><value>警告の詳細</value></data>
+  <data name="WarningDetailsTooltip" xml:space="preserve"><value>クリックして警告内容を表示</value></data>
+  <data name="RelativeLinksContinue" xml:space="preserve"><value>そのまま変換</value></data>
+  <data name="RelativeLinksCancel" xml:space="preserve"><value>キャンセル</value></data>
   <data name="UnsupportedImage" xml:space="preserve"><value>対応していない画像形式です: {0}</value></data>
   <data name="ImageMissing" xml:space="preserve"><value>画像が見つかりません: {0}</value></data>
   <data name="TemplateAssetsOnly" xml:space="preserve"><value>テンプレート素材は assets/ 内に置いてください: {0}</value></data>

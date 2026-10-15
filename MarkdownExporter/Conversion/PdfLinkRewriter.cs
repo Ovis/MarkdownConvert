@@ -7,7 +7,8 @@ namespace MarkdownExporter.Conversion;
 internal static class PdfLinkRewriter
 {
     public static async Task<bool> RewriteLocalPdfLinksAsync(
-        string inputPath, string outputPath, string finalPath, string? qpdfPath = null)
+        string inputPath, string outputPath, string finalPath, string? qpdfPath = null,
+        IReadOnlyDictionary<string, string>? originalMarkdownLinks = null)
     {
         qpdfPath ??= Path.Combine(AppContext.BaseDirectory, "Tools", "qpdf", "qpdf.exe");
         if (!File.Exists(qpdfPath))
@@ -32,7 +33,7 @@ internal static class PdfLinkRewriter
                 if (!key.StartsWith("obj:", StringComparison.Ordinal) || entry is not JsonObject original)
                     continue;
                 var copy = (JsonObject)original.DeepClone();
-                if (RewriteLinks(copy["value"], outputDirectory, objects, changedObjects))
+                if (RewriteLinks(copy["value"], outputDirectory, objects, changedObjects, originalMarkdownLinks))
                     changedObjects[key] = copy;
             }
             if (changedObjects.Count == 0)
@@ -54,13 +55,14 @@ internal static class PdfLinkRewriter
     }
 
     private static bool RewriteLinks(JsonNode? node, string outputDirectory,
-        JsonObject objects, JsonObject changedObjects)
+        JsonObject objects, JsonObject changedObjects,
+        IReadOnlyDictionary<string, string>? originalMarkdownLinks)
     {
         if (node is JsonArray array)
         {
             var changed = false;
             foreach (var child in array)
-                changed = RewriteLinks(child, outputDirectory, objects, changedObjects) || changed;
+                changed = RewriteLinks(child, outputDirectory, objects, changedObjects, originalMarkdownLinks) || changed;
             return changed;
         }
         if (node is not JsonObject dictionary)
@@ -70,7 +72,7 @@ internal static class PdfLinkRewriter
         if (dictionary["/Subtype"]?.GetValue<string>() == "/Link")
         {
             if (dictionary["/A"] is JsonObject action)
-                changedHere = RewriteAction(action, outputDirectory);
+                changedHere = RewriteAction(action, outputDirectory, originalMarkdownLinks);
             else if (dictionary["/A"] is JsonValue reference && reference.TryGetValue<string>(out var value))
             {
                 var objectKey = "obj:" + value;
@@ -78,24 +80,33 @@ internal static class PdfLinkRewriter
                 {
                     var actionObject = (JsonObject)(changedObjects[objectKey] ?? original).DeepClone();
                     if (actionObject["value"] is JsonObject referencedAction &&
-                        RewriteAction(referencedAction, outputDirectory))
+                        RewriteAction(referencedAction, outputDirectory, originalMarkdownLinks))
                         changedObjects[objectKey] = actionObject;
                 }
             }
         }
         foreach (var (_, child) in dictionary)
-            changedHere = RewriteLinks(child, outputDirectory, objects, changedObjects) || changedHere;
+            changedHere = RewriteLinks(child, outputDirectory, objects, changedObjects, originalMarkdownLinks) || changedHere;
         return changedHere;
     }
 
-    private static bool RewriteAction(JsonObject action, string outputDirectory)
+    private static bool RewriteAction(JsonObject action, string outputDirectory,
+        IReadOnlyDictionary<string, string>? originalMarkdownLinks)
     {
         if (action["/S"]?.GetValue<string>() != "/URI")
             return false;
         var value = action["/URI"]?.GetValue<string>();
         if (value is null || !value.StartsWith("u:", StringComparison.Ordinal) ||
-            !Uri.TryCreate(value[2..], UriKind.Absolute, out var uri) || !uri.IsFile ||
-            !Path.GetExtension(uri.LocalPath).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+            !Uri.TryCreate(value[2..], UriKind.Absolute, out var uri) || !uri.IsFile)
+            return false;
+
+        if (originalMarkdownLinks is not null &&
+            originalMarkdownLinks.TryGetValue(uri.AbsoluteUri, out var original))
+        {
+            action["/URI"] = "u:" + original;
+            return true;
+        }
+        if (!Path.GetExtension(uri.LocalPath).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
             return false;
 
         var relative = Path.GetRelativePath(outputDirectory, uri.LocalPath).Replace('\\', '/');

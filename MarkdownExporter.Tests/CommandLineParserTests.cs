@@ -11,7 +11,7 @@ public sealed class CommandLineParserTests
         var command = CommandLineParser.Parse([
             "--run", "first.md", "second.markdown", "-o", "output", "--template", "custom",
             "--format", "pdf", "--encoding", "euc-jp", "--orientation", "landscape",
-            "--embed-images", "--fit-figures-to-page", "--overwrite"
+            "--embed-images", "--fit-figures-to-page", "--follow-markdown-links", "--overwrite"
         ]);
 
         Assert.Multiple(() =>
@@ -25,6 +25,7 @@ public sealed class CommandLineParserTests
             Assert.That(command.Options.Orientation, Is.EqualTo(PageOrientation.Landscape));
             Assert.That(command.Options.EmbedImages, Is.True);
             Assert.That(command.Options.FitFiguresToPage, Is.True);
+            Assert.That(command.Options.FollowMarkdownLinks, Is.True);
             Assert.That(command.Options.Overwrite, Is.True);
         });
     }
@@ -40,6 +41,7 @@ public sealed class CommandLineParserTests
             Assert.That(command.Files, Is.EqualTo(new[] { "first.md", "two spaces.md" }));
             Assert.That(command.Options.Format, Is.EqualTo(ExportFormat.Both));
             Assert.That(command.Options.Encoding, Is.EqualTo(InputEncoding.Auto));
+            Assert.That(command.Options.FollowMarkdownLinks, Is.False);
         });
     }
 
