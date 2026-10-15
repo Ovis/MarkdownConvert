@@ -122,7 +122,7 @@ public sealed class ConversionService
                         var rendered = await renderer.RenderAsync(entry.StagePath, temporaryPdf, options.Orientation, options.FitFiguresToPage);
                         foreach (var warning in rendered.Warnings.Except(entry.Warnings))
                             entry.Warnings.Add(warning);
-                        var completedPdf = PdfLinkRewriter.RewriteLocalPdfLinks(temporaryPdf, portablePdf, entry.PdfPath)
+                        var completedPdf = await PdfLinkRewriter.RewriteLocalPdfLinksAsync(temporaryPdf, portablePdf, entry.PdfPath)
                             ? portablePdf : temporaryPdf;
                         File.Move(completedPdf, entry.PdfPath, true);
                         entry.PdfSuccess = true;

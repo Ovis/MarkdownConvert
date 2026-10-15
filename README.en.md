@@ -18,6 +18,8 @@ For output, choose "Beside each source file" (the default) or "Specified folder"
 
 If WebView2 Runtime is missing, the graphical interface offers to open Microsoft's download page. The CLI exits with an error containing the URL. The ZIP does not bundle the Runtime. The installer uses Microsoft's Bootstrapper to install it when needed and requires an internet connection for that step.
 
+The installer selects “Add MarkdownExporter to the user PATH” by default. This lets you run `mdexport.exe` by name from a newly opened terminal. Clear the checkbox if you do not want it. For a silent installation, pass `/MERGETASKS="!addtopath"` to disable it. Uninstall removes only the path entry added by the installer. The ZIP does not change PATH.
+
 In Default Settings, the display language can be set to Follow system, Japanese, or English. The interface switches language when you select it; saving the setting applies it on the next launch as well. CLI help, warnings, and errors use the same language setting. Follow system uses Japanese when the Windows display language is Japanese and English otherwise. Markdown content and output templates are not translated.
 
 ### CLI
@@ -66,6 +68,7 @@ Local PDF links inside generated PDFs use paths relative to the generated PDF. L
 ## Development
 
 ```powershell
+./tools/prepare-qpdf.ps1 -DestinationDir ./artifacts/qpdf
 dotnet build MarkdownExporter.slnx -m:1
 dotnet test MarkdownExporter.slnx -m:1
 dotnet publish MarkdownExporter/MarkdownExporter.csproj -c Release -r win-x64 -m:1
@@ -73,4 +76,4 @@ dotnet publish MarkdownExporter/MarkdownExporter.csproj -c Release -r win-x64 -m
 
 `MarkdownExporter.Tests` uses NUnit to test logic such as CLI parsing, character encoding, preflight checks, assets and templates, Markdown and PDF links, and settings persistence. These tests do not cover WebView2 rendering or graphical interface interactions.
 
-Include `mdexport.exe`, `Template/`, `WebAssets/`, and `Licence/` in a published distribution. Third-party notices, the NuGet dependency inventory, and license texts are collected in `Licence/`. `Licence/KaTeX-LICENSE.txt` contains the SIL Open Font License 1.1 and copyright notices for the KaTeX fonts; it is also copied alongside fonts in HTML output containing math or Mermaid. To rebuild `WebAssets`, run `npm ci` and `npm run build` in `tools/web-assets/`. The ZIP and installer include these files.
+Include `mdexport.exe`, `Template/`, `WebAssets/`, `Licence/`, and `Tools/qpdf/` in a published distribution. Fetch qpdf with the script above before building. Third-party notices, the NuGet dependency inventory, and license texts are collected in `Licence/`. `Licence/KaTeX-LICENSE.txt` contains the SIL Open Font License 1.1 and copyright notices for the KaTeX fonts; it is also copied alongside fonts in HTML output containing math or Mermaid. To rebuild `WebAssets`, run `npm ci` and `npm run build` in `tools/web-assets/`. The ZIP and installer include these files.

@@ -125,6 +125,10 @@
   <data name="FontsFailed" xml:space="preserve"><value>Could not load fonts: {0}</value></data>
   <data name="PdfFailed" xml:space="preserve"><value>Could not create the PDF.</value></data>
   <data name="PdfLinkDifferentVolume" xml:space="preserve"><value>A PDF link on another volume cannot be made relative: {0}</value></data>
+  <data name="QpdfMissing" xml:space="preserve"><value>qpdf was not found: {0}. Reinstall the application.</value></data>
+  <data name="QpdfInvalidJson" xml:space="preserve"><value>Could not read the PDF information returned by qpdf.</value></data>
+  <data name="QpdfStartFailed" xml:space="preserve"><value>Could not start qpdf.</value></data>
+  <data name="QpdfFailed" xml:space="preserve"><value>qpdf failed to update PDF links (exit code {0}): {1}</value></data>
   <data name="HtmlCaptureFailed" xml:space="preserve"><value>Could not capture the completed HTML.</value></data>
   <data name="ExternalImageFailed" xml:space="preserve"><value>Could not load external image: {0}</value></data>
 </root>

@@ -18,6 +18,8 @@ GUIの出力先は「元ファイルと同じ場所」（既定）と「指定�
 
 WebView2 Runtimeがない場合、GUIはMicrosoftのダウンロードページを案内します。CLIはURLを含むエラーを表示して終了します。ZIP版はRuntimeを同梱しません。インストーラ版は未導入時にMicrosoftのBootstrapperからRuntimeを導入します（ネットワーク接続が必要です）。
 
+インストーラは「MarkdownExporterをユーザーのPATHに追加する」を既定で選択します。追加すると、新しく開いたターミナルから `mdexport.exe` を名前だけで実行できます。不要ならインストール時にチェックを外してください。サイレントインストールでは `/MERGETASKS="!addtopath"` で追加を無効にできます。アンインストール時はインストーラが追加したパスだけを削除します。ZIP版はPATHを変更しません。
+
 「既定の設定」の表示言語は「システムに合わせる・日本語・英語」から選べます。画面の表示は選択時に切り替わり、保存すると次回起動にも適用されます。CLIのヘルプ、警告、エラーもこの言語設定を参照します。「システムに合わせる」ではWindowsの表示言語が日本語なら日本語、それ以外なら英語を使います。Markdown本文と出力テンプレートの内容は翻訳しません。
 
 ### CLI
@@ -66,6 +68,7 @@ PDF内のローカルPDFリンクには、出力PDFからリンク先への相�
 ## 開発
 
 ```powershell
+./tools/prepare-qpdf.ps1 -DestinationDir ./artifacts/qpdf
 dotnet build MarkdownExporter.slnx -m:1
 dotnet test MarkdownExporter.slnx -m:1
 dotnet publish MarkdownExporter/MarkdownExporter.csproj -c Release -r win-x64 -m:1
@@ -73,4 +76,4 @@ dotnet publish MarkdownExporter/MarkdownExporter.csproj -c Release -r win-x64 -m
 
 `MarkdownExporter.Tests` はNUnitでCLI解析、文字コード、事前検査、素材・テンプレート、Markdown/PDFリンク、設定保存などのロジックを検証します。WebView2の描画と画面操作はこのテストには含みません。
 
-発行物には `mdexport.exe` と `Template/`、`WebAssets/`、`Licence/` を含めてください。サードパーティーの通知、NuGet依存の一覧とライセンスは `Licence/` にまとめています。KaTeXフォントのSIL Open Font License 1.1と著作権表示は `Licence/KaTeX-LICENSE.txt` に収録し、数式・Mermaidを含むHTMLの素材にもコピーします。`WebAssets` は `tools/web-assets/` で `npm ci` と `npm run build` により再生成できます。配布用ZIPとインストーラはこれらのファイルを同梱します。
+発行物には `mdexport.exe` と `Template/`、`WebAssets/`、`Licence/`、`Tools/qpdf/` を含めてください。qpdfはビルド前に上記スクリプトで取得します。サードパーティーの通知、NuGet依存の一覧とライセンスは `Licence/` にまとめています。KaTeXフォントのSIL Open Font License 1.1と著作権表示は `Licence/KaTeX-LICENSE.txt` に収録し、数式・Mermaidを含むHTMLの素材にもコピーします。`WebAssets` は `tools/web-assets/` で `npm ci` と `npm run build` により再生成できます。配布用ZIPとインストーラはこれらのファイルを同梱します。

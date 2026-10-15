@@ -16,7 +16,7 @@ if (Test-Path -LiteralPath $stage) {
 New-Item -ItemType Directory -Path $stage | Out-Null
 
 Copy-Item -LiteralPath (Join-Path $publish 'mdexport.exe') -Destination $stage
-foreach ($folder in @('Template', 'WebAssets', 'Licence')) {
+foreach ($folder in @('Template', 'WebAssets', 'Licence', 'Tools')) {
     Copy-Item -LiteralPath (Join-Path $publish $folder) -Destination $stage -Recurse
 }
 foreach ($file in @('README.md', 'README.en.md')) {

@@ -19,7 +19,6 @@
     <PackageReference Include="HtmlSanitizer" Version="9.2.1039" />
     <PackageReference Include="UTF.Unknown" Version="2.7.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
-    <PackageReference Include="PDFsharp" Version="6.2.4" />
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="MarkdownExporter.Tests" />
@@ -29,6 +28,10 @@
     <Content Include="Template\default\**\*" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
     <Content Include="WebAssets\**\*" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
     <Content Include="..\Licence\**\*" Link="Licence\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <Content Include="..\artifacts\qpdf\*" Link="Tools\qpdf\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
     <Content Include="..\LICENSE" Link="Licence\MarkdownExporter-LICENSE.txt" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
+  <Target Name="EnsureQpdfForPublish" BeforeTargets="Publish">
+    <Error Condition="!Exists('..\artifacts\qpdf\qpdf.exe')" Text="Run tools/prepare-qpdf.ps1 before publishing MarkdownExporter." />
+  </Target>
 </Project>

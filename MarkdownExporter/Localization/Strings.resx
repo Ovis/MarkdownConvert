@@ -125,6 +125,10 @@
   <data name="FontsFailed" xml:space="preserve"><value>フォントを読み込めませんでした: {0}</value></data>
   <data name="PdfFailed" xml:space="preserve"><value>PDFの生成に失敗しました。</value></data>
   <data name="PdfLinkDifferentVolume" xml:space="preserve"><value>別のドライブにあるPDFへのリンクは相対パスにできません: {0}</value></data>
+  <data name="QpdfMissing" xml:space="preserve"><value>qpdf が見つかりません: {0}。アプリを再インストールしてください。</value></data>
+  <data name="QpdfInvalidJson" xml:space="preserve"><value>qpdf から受け取った PDF 情報を読み取れませんでした。</value></data>
+  <data name="QpdfStartFailed" xml:space="preserve"><value>qpdf を起動できませんでした。</value></data>
+  <data name="QpdfFailed" xml:space="preserve"><value>qpdf による PDF リンク処理に失敗しました（終了コード {0}）: {1}</value></data>
   <data name="HtmlCaptureFailed" xml:space="preserve"><value>完成HTMLを取得できませんでした。</value></data>
   <data name="ExternalImageFailed" xml:space="preserve"><value>外部画像を読み込めませんでした: {0}</value></data>
 </root>
