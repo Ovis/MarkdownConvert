@@ -10,10 +10,6 @@ Copyright (c) .NET Foundation and Contributors. All rights reserved.
 HtmlSanitizer 9.2.1039
 Copyright 2013-2026 Michael Ganss
 
-Microsoft.Extensions.DependencyInjection.Abstractions 8.0.2
-Microsoft.Extensions.Logging.Abstractions 8.0.3
-Copyright (c) .NET Foundation and Contributors
-
 The MIT License (MIT)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
