@@ -45,6 +45,45 @@ public sealed class CommandLineParserTests
         });
     }
 
+    [Test]
+    public void Parse_SendToSelection_IgnoresNonMarkdownFilesAndDirectories()
+    {
+        using var folder = new TestFolder();
+        var first = folder.Write("first.md", "# First");
+        var other = folder.Write("notes.txt", "Notes");
+        var directory = folder.PathFor("directory.md");
+        Directory.CreateDirectory(directory);
+        var second = folder.Write("two spaces.MARKDOWN", "# Second");
+
+        var command = CommandLineParser.Parse([first, other, directory, second]);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(command.Run, Is.False);
+            Assert.That(command.Files, Is.EqualTo(new[] { first, second }));
+        });
+    }
+
+    [Test]
+    public void Parse_Run_KeepsNonMarkdownInputForCliValidation()
+    {
+        var command = CommandLineParser.Parse(["--run", "notes.txt"]);
+
+        Assert.That(command.Files, Is.EqualTo(new[] { "notes.txt" }));
+    }
+
+    [Test]
+    public void Parse_SendToSelection_WithOnlyNonMarkdownFiles_OpensEmptyGui()
+    {
+        var command = CommandLineParser.Parse(["notes.txt", "image.png"]);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(command.Run, Is.False);
+            Assert.That(command.Files, Is.Empty);
+        });
+    }
+
     [TestCase("--run")]
     [TestCase("--run a.md --format other")]
     [TestCase("--run a.md --encoding")]

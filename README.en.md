@@ -2,33 +2,42 @@
 
 English | [日本語](README.md)
 
-MarkdownExporter is a Windows application that converts Markdown files to HTML and PDF through drag and drop, a graphical interface, or the command line. The executable is named `mdexport.exe`.
+MarkdownExporter is a Windows application that converts Markdown files to HTML and PDF.
 
 ## Requirements
 
 - Windows 11 24H2 or later
 - WebView2 Runtime (required for both HTML and PDF conversion)
-- For development: .NET 10 SDK; Node.js/npm only when rebuilding the rendering bundle
 
 ## Usage
 
-Run `mdexport.exe` to open the graphical interface. Drop Markdown files onto the executable, a shortcut, or the open window to add them to the file list. Review the settings, then click Convert.
+Run `mdexport.exe` to open the graphical interface.
+Drop Markdown files onto the window to add them to the list, review the settings, and click Convert to create HTML and PDF files.
 
-For output, choose "Beside each source file" (the default) or "Specified folder" in the GUI. The first choice writes beside each Markdown file; the second writes to a shared folder. You can save the same choice in Default Settings.
+The installer offers an option to add MarkdownExporter to Explorer's Send to menu; it is selected by default.
+Select multiple files and choose Send to → MarkdownExporter to open the GUI with the Markdown files already in the list.
+Other files and folders are ignored.
 
-When output goes to a specified folder, local relative links may resolve to different files. If affected links are found, the GUI asks for confirmation before conversion and keeps a warning on each affected file's result. Linked files outside the conversion set are not copied, and those links are not rewritten. Links to successfully converted Markdown files point to the generated HTML or PDF.
+Choose "Beside each source file" (the default) or "Specified folder" for the output location.
+The first choice writes output beside each Markdown file; the second writes to a shared folder. Values saved in Default Settings become the initial settings on subsequent launches.
 
-If WebView2 Runtime is missing, the graphical interface offers to open Microsoft's download page. The CLI exits with an error containing the URL. The ZIP does not bundle the Runtime. The installer uses Microsoft's Bootstrapper to install it when needed and requires an internet connection for that step.
+When output goes to a specified folder, local relative links may resolve to different files. If affected links are found, the GUI asks for confirmation before conversion.
+If you continue, a warning remains on each affected file's result. Linked files outside the conversion set are not copied, and those links are not rewritten.
+Links to successfully converted Markdown files point to the generated HTML or PDF.
 
-The installer selects “Add MarkdownExporter to the user PATH” by default. This lets you run `mdexport.exe` by name from a newly opened terminal. Clear the checkbox if you do not want it. For a silent installation, pass `/MERGETASKS="!addtopath"` to disable it. Uninstall removes only the path entry added by the installer. The ZIP does not change PATH.
+MarkdownExporter uses WebView2 Runtime for conversion. If it is missing, the GUI offers to open Microsoft's download page. The CLI displays the download URL and exits with an error.
+The ZIP does not bundle the Runtime. If needed, the installer installs it automatically; this requires an internet connection.
 
-In Default Settings, the display language can be set to Follow system, Japanese, or English. The interface switches language when you select it; saving the setting applies it on the next launch as well. CLI help, warnings, and errors use the same language setting. Follow system uses Japanese when the Windows display language is Japanese and English otherwise. Markdown content and output templates are not translated.
+The installer selects "Add MarkdownExporter to the user PATH" by default.
+With this option enabled, you can run `mdexport.exe` by name from a terminal. Clear the checkbox during installation if you do not need it.
 
 ### CLI
 
-To convert without opening the GUI, pass `--run` and one or more `.md` or `.markdown` files. You can process multiple files together; quote paths that contain spaces. With no conversion options, the CLI writes `<input-name>.html` and `<input-name>.pdf` beside each input file. CLI conversion options do not use defaults saved in the graphical interface.
+To convert without opening the GUI, pass `--run` and one or more `.md` or `.markdown` files. You can process multiple files together; quote paths that contain spaces.
+With no conversion options, the CLI writes `<input-name>.html` and `<input-name>.pdf` beside each input file. CLI conversion options do not use defaults saved in the graphical interface.
 
-The GUI option “Convert linked Markdown files” or CLI flag `--follow-markdown-links` recursively follows local relative Markdown links and converts the discovered files too. Without it, only explicitly added files are converted. Links between successfully converted Markdown files point to HTML from HTML and to PDF from PDF.
+The GUI option "Convert linked Markdown files" or CLI flag `--follow-markdown-links` recursively follows local relative Markdown links and converts the discovered files too.
+Without it, only explicitly added files are converted. Links between successfully converted Markdown files point to HTML from HTML and to PDF from PDF.
 
 ```text
 mdexport.exe --run <input.md> [another.markdown ...] [options]
@@ -37,7 +46,7 @@ mdexport.exe --run <input.md> [another.markdown ...] [options]
 | Option | Behavior and default |
 | --- | --- |
 | `--run` | Convert without opening the GUI. Required for command-line conversion. |
-| `-o <folder>` / `--output <folder>` | Send all outputs to this folder. By default, each output is written beside its input. Relative paths are resolved from the current working directory. |
+| `-o <folder>` / `--output <folder>` | Send all outputs to this folder. By default, each output is written beside its input. If you specify a relative path, it is resolved from the current working directory. |
 | `--template <name-or-absolute-path>` | Use a template. The default is `default`. A name selects `%APPDATA%\MarkdownExporter\Template\<name>`; an absolute path selects that folder. |
 | `--format <format>` | Choose `html`, `pdf`, or `both`; default: `both`. `html` and `pdf` produce only the named format. |
 | `--embed-images` | Embed local images as Data URIs in HTML. By default, they are copied to the HTML asset folder. |
@@ -59,19 +68,27 @@ Examples from the distribution folder in PowerShell:
 .\mdexport.exe --help
 ```
 
-Without `--overwrite`, an input whose output already exists fails, while other inputs continue. When names collide in one output folder, sequential suffixes such as `intro.html` and `intro-2.html` keep them distinct. Original file stems are reserved first, so an existing source named `intro-2.md` keeps its stem. Parent folder names are never added to output names. Exit codes are `0` for success or help, `1` for conversion failure, and `2` for invalid arguments.
+Without `--overwrite`, an input whose output already exists fails, while other inputs continue.
+When names collide in one output folder, sequential suffixes such as `intro.html` and `intro-2.html` keep them distinct.
+Original file stems are reserved first, so an existing source named `intro-2.md` keeps its stem. Parent folder names are never added to output names.
+Exit codes are `0` for success or help, `1` for conversion failure, and `2` for invalid arguments.
 
 With `--output`, the CLI converts without prompting and prints a warning to standard error if local relative links may resolve to different files. A warning alone does not change the exit code.
 
 ## Templates
 
-On the first launch, the application copies `Template/default` from beside the executable to `%APPDATA%\MarkdownExporter\Template\default`. Updates do not overwrite a template you have edited.
+On the first launch, the application copies the default template files to `%APPDATA%\MarkdownExporter\Template\default`.
+You can add templates by creating folders under `%APPDATA%\MarkdownExporter\Template` and placing HTML and CSS files inside them.
+A template must contain `index.html` and `style.css`. Place `{{content}}` and `{{style}}` in `index.html`; `{{title}}` is optional. Put additional images and fonts in `assets/`. Custom JavaScript is not supported.
 
-A template must contain `index.html` and `style.css`. Place `{{content}}` and `{{style}}` in `index.html`; `{{title}}` is optional. Put additional images and fonts in `assets/`. Pass an AppData template name or an absolute directory path to `--template`. Custom JavaScript is not supported.
+## Silent installation options
 
-Local images in Markdown are copied to `<document-name>_assets/content/` for HTML output. `--embed-images` embeds them as Data URIs. Template assets go into `<document-name>_assets/template/`. A PDF-only conversion does not retain an assets directory.
+The following options are available for silent installation.
 
-Local PDF links inside generated PDFs use paths relative to the generated PDF. Linked PDF files are not copied to the output directory, so keep their relative locations when moving the files.
+| Option | Description |
+| --- | --- |
+| `/MERGETASKS="!sendto"` | Do not add MarkdownExporter to the Send to menu. |
+| `/MERGETASKS="!addtopath"` | Do not add the MarkdownExporter installation folder to the user PATH. |
 
 ## Development
 

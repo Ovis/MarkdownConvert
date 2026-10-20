@@ -87,6 +87,8 @@ public static class CommandLineParser
             throw new ArgumentException(LanguageManager.Text("CliRequiresFile"));
         if (!run && args.Any(x => x.StartsWith('-')) && !help)
             throw new ArgumentException(LanguageManager.Text("CliRequiresRun"));
+        if (!run)
+            files.RemoveAll(path => !ConversionService.IsMarkdown(path) || Directory.Exists(path));
         return new CommandLine(run, help, files, options);
     }
 
