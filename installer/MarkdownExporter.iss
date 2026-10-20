@@ -36,6 +36,10 @@ Name: "ja"; MessagesFile: "compiler:Languages\Japanese.isl"
 [CustomMessages]
 en.DesktopShortcut=Create a desktop shortcut
 ja.DesktopShortcut=デスクトップにショートカットを作成する
+en.SendToShortcut=Add MarkdownExporter to the Send To menu
+ja.SendToShortcut=エクスプローラーの「送る」にMarkdownExporterを追加する
+en.SendToUpdateFailed=Could not update the Send To shortcut.
+ja.SendToUpdateFailed=「送る」メニューのショートカットを更新できませんでした。
 en.AddToPath=Add MarkdownExporter to the user PATH
 ja.AddToPath=MarkdownExporterをユーザーのPATHに追加する
 en.PathUpdateFailed=Could not update the user PATH. MarkdownExporter was installed, but mdexport.exe cannot be run by name until PATH is updated.
@@ -45,6 +49,7 @@ ja.RuntimeInstallFailed=WebView2 Runtimeをインストールできませんで�
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:DesktopShortcut}"; Flags: unchecked
+Name: "sendto"; Description: "{cm:SendToShortcut}"
 Name: "addtopath"; Description: "{cm:AddToPath}"
 
 [Files]
@@ -60,6 +65,7 @@ Source: "{#BootstrapperPath}"; DestName: "MicrosoftEdgeWebview2Setup.exe"; Flags
 [Icons]
 Name: "{group}\MarkdownExporter"; Filename: "{app}\mdexport.exe"
 Name: "{autodesktop}\MarkdownExporter"; Filename: "{app}\mdexport.exe"; Tasks: desktopicon
+Name: "{usersendto}\MarkdownExporter"; Filename: "{app}\mdexport.exe"; Tasks: sendto
 
 [Code]
 const
@@ -225,10 +231,34 @@ begin
   Result := True;
 end;
 
+function SyncSendToShortcut: Boolean;
+var
+  OwnedShortcut: String;
+begin
+  Result := False;
+  if WizardIsTaskSelected('sendto') then
+  begin
+    Result := RegWriteStringValue(HKCU, InstallerStateKey, 'SendToAdded',
+      ExpandConstant('{usersendto}\MarkdownExporter.lnk'));
+    Exit;
+  end;
+
+  if RegQueryStringValue(HKCU, InstallerStateKey, 'SendToAdded', OwnedShortcut) then
+  begin
+    if FileExists(OwnedShortcut) and not DeleteFile(OwnedShortcut) then
+      Exit;
+    RegDeleteValue(HKCU, InstallerStateKey, 'SendToAdded');
+    RegDeleteKeyIfEmpty(HKCU, InstallerStateKey);
+  end;
+  Result := True;
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep <> ssPostInstall then
     Exit;
+  if not SyncSendToShortcut then
+    RaiseException(CustomMessage('SendToUpdateFailed'));
   if WizardIsTaskSelected('addtopath') then
   begin
     if not AddToUserPath then
@@ -246,6 +276,8 @@ begin
     Exit;
   if RemoveOwnedPath then
     SendMessageTimeoutW($FFFF, $001A, 0, 'Environment', 2, 5000, MessageResult);
+  RegDeleteValue(HKCU, InstallerStateKey, 'SendToAdded');
+  RegDeleteKeyIfEmpty(HKCU, InstallerStateKey);
 end;
 
 function HasRuntimeVersion(const Version: String): Boolean;
