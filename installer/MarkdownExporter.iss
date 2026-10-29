@@ -28,6 +28,7 @@ SolidCompression=yes
 WizardStyle=modern
 CloseApplications=yes
 ChangesEnvironment=yes
+ChangesAssociations=yes
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
@@ -40,6 +41,12 @@ en.SendToShortcut=Add MarkdownExporter to the Send To menu
 ja.SendToShortcut=エクスプローラーの「送る」にMarkdownExporterを追加する
 en.SendToUpdateFailed=Could not update the Send To shortcut.
 ja.SendToUpdateFailed=「送る」メニューのショートカットを更新できませんでした。
+en.ContextMenuCommand=Open in MarkdownExporter
+ja.ContextMenuCommand=MarkdownExporterで開く
+en.ContextMenuTask=Add MarkdownExporter to the classic File Explorer context menu
+ja.ContextMenuTask=エクスプローラーの「その他のオプション」にMarkdownExporterを追加する
+en.ContextMenuUpdateFailed=Could not update the File Explorer context menu.
+ja.ContextMenuUpdateFailed=エクスプローラーの右クリックメニューを更新できませんでした。
 en.AddToPath=Add MarkdownExporter to the user PATH
 ja.AddToPath=MarkdownExporterをユーザーのPATHに追加する
 en.PathUpdateFailed=Could not update the user PATH. MarkdownExporter was installed, but mdexport.exe cannot be run by name until PATH is updated.
@@ -50,6 +57,7 @@ ja.RuntimeInstallFailed=WebView2 Runtimeをインストールできませんで�
 [Tasks]
 Name: "desktopicon"; Description: "{cm:DesktopShortcut}"; Flags: unchecked
 Name: "sendto"; Description: "{cm:SendToShortcut}"
+Name: "contextmenu"; Description: "{cm:ContextMenuTask}"
 Name: "addtopath"; Description: "{cm:AddToPath}"
 
 [Files]
@@ -71,6 +79,7 @@ Name: "{usersendto}\MarkdownExporter"; Filename: "{app}\mdexport.exe"; Tasks: se
 const
   UserEnvironmentKey = 'Environment';
   InstallerStateKey = 'Software\MarkdownExporter\Installer';
+  ContextMenuKey = 'Software\Classes\AllFilesystemObjects\shell\EsheepDev.MarkdownExporter';
   RegSz = 1;
   RegExpandSz = 2;
   KeyQueryValue = 1;
@@ -253,12 +262,35 @@ begin
   Result := True;
 end;
 
+function SyncContextMenu: Boolean;
+var
+  Command: String;
+begin
+  if not WizardIsTaskSelected('contextmenu') then
+  begin
+    Result := not RegKeyExists(HKCU, ContextMenuKey) or
+      RegDeleteKeyIncludingSubkeys(HKCU, ContextMenuKey);
+    Exit;
+  end;
+
+  Command := '"' + ExpandConstant('{app}\mdexport.exe') + '" "%1"';
+  Result :=
+    RegWriteStringValue(HKCU, ContextMenuKey, '', CustomMessage('ContextMenuCommand')) and
+    RegWriteStringValue(HKCU, ContextMenuKey, 'Icon',
+      '"' + ExpandConstant('{app}\mdexport.exe') + '",0') and
+    RegWriteStringValue(HKCU, ContextMenuKey, 'MultiSelectModel', 'Player') and
+    RegWriteStringValue(HKCU, ContextMenuKey, 'NeverDefault', '') and
+    RegWriteStringValue(HKCU, ContextMenuKey + '\command', '', Command);
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep <> ssPostInstall then
     Exit;
   if not SyncSendToShortcut then
     RaiseException(CustomMessage('SendToUpdateFailed'));
+  if not SyncContextMenu then
+    RaiseException(CustomMessage('ContextMenuUpdateFailed'));
   if WizardIsTaskSelected('addtopath') then
   begin
     if not AddToUserPath then
@@ -278,6 +310,7 @@ begin
     SendMessageTimeoutW($FFFF, $001A, 0, 'Environment', 2, 5000, MessageResult);
   RegDeleteValue(HKCU, InstallerStateKey, 'SendToAdded');
   RegDeleteKeyIfEmpty(HKCU, InstallerStateKey);
+  RegDeleteKeyIncludingSubkeys(HKCU, ContextMenuKey);
 end;
 
 function HasRuntimeVersion(const Version: String): Boolean;
