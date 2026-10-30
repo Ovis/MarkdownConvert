@@ -105,7 +105,8 @@ public sealed class MarkdownDocumentBuilder
 
     internal static IHtmlDocument ParseMarkdown(string markdown)
     {
-        markdown = Regex.Replace(markdown, @"(?m)^\s*<!--\s*pagebreak\s*-->\s*$", "<div class=\"pagebreak\"></div>", RegexOptions.IgnoreCase);
+        markdown = Regex.Replace(markdown, @"(?m)^[ \t]*<!--[ \t]*pagebreak[ \t]*-->[ \t]*\r?$",
+            "\n<div class=\"pagebreak\"></div>\n", RegexOptions.IgnoreCase);
         var raw = Markdig.Markdown.ToHtml(markdown, Pipeline);
         var sanitizer = CreateSanitizer();
         var safe = sanitizer.Sanitize(raw);

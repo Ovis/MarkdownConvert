@@ -1,3 +1,4 @@
+using AngleSharp.Html.Parser;
 using MarkdownExporter.Conversion;
 
 namespace MarkdownExporter.Tests;
@@ -102,6 +103,28 @@ public sealed class MarkdownDocumentBuilderTests
         {
             Assert.That(html, Does.Contain("class=\"pagebreak\""));
             Assert.That(html, Does.Contain("break-before:page"));
+        });
+    }
+
+    [TestCase("\n", false)]
+    [TestCase("\n", true)]
+    [TestCase("\r\n", false)]
+    [TestCase("\r\n", true)]
+    public void Build_PageBreak_PreservesMarkdownAfterMarker(string newline, bool includeBlankLines)
+    {
+        using var folder = new TestFolder();
+        var spacer = includeBlankLines ? newline : "";
+        var input = folder.Write("report.md",
+            $"first{newline}{spacer}<!-- pagebreak -->{newline}{spacer}## 2. Team plan{newline}{newline}This is **bold**.");
+
+        var html = Build(input, File.ReadAllText(input), folder.PathFor("output"), new ConversionOptions());
+        var document = new HtmlParser().ParseDocument(html);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(document.QuerySelector(".pagebreak"), Is.Not.Null);
+            Assert.That(document.QuerySelector("h2")?.TextContent, Is.EqualTo("2. Team plan"));
+            Assert.That(document.QuerySelector("strong")?.TextContent, Is.EqualTo("bold"));
         });
     }
 
