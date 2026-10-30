@@ -31,6 +31,20 @@ The ZIP does not bundle the Runtime. If needed, the installer installs it automa
 The installer selects "Add MarkdownExporter to the user PATH" by default.
 With this option enabled, you can run `mdexport.exe` by name from a terminal. Clear the checkbox during installation if you do not need it.
 
+### Page breaks
+
+To start a new page at a chosen position in the PDF, put the following line on its own in the Markdown source:
+
+```markdown
+Text on the previous page
+
+<!-- pagebreak -->
+
+Text on the next page
+```
+
+The page break applies to PDF output and when printing the HTML. It is not shown when viewing the HTML on screen.
+
 ### CLI
 
 To convert without opening the GUI, pass `--run` and one or more `.md` or `.markdown` files. You can process multiple files together; quote paths that contain spaces.
